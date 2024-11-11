@@ -8,6 +8,7 @@ import SpeechRecogination from "./component/SpeechRecogination";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../src/App.css";
 import ContactMe from "./component/ContactMe";
+import LearnQuiz from "./component/LearnQuiz";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const App = () => {
     {
       path: "/contact",
       element: <ContactMe />,
+    },
+    {
+      path: "/learn",
+      element: <LearnQuiz />,
     },
   ]);
   return (

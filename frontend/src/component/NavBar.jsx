@@ -19,6 +19,9 @@ const NavBar = () => {
           <li>
             <a href={`/contact`}>Contact</a>
           </li>
+          <li>
+            <a href={`/learn`}>learn</a>
+          </li>
           <li>learn</li>
           <li>login</li>
         </ul>
