@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../assets/recode_logo-removebg-preview.png";
+import { NavLink } from "react-router-dom";
 const NavBar = () => {
   return (
     <Wrapper>
@@ -13,17 +14,26 @@ const NavBar = () => {
               style={{ width: "90px", position: "center" }}
             />
           </li>
+          {/* <NavLink to={`/`}> */}
           <li>
             <a href={`/`}>Home</a>
           </li>
+          {/* </NavLink> */}
           <li>
             <a href={`/contact`}>Contact</a>
           </li>
           <li>
             <a href={`/learn`}>learn</a>
           </li>
-          <li>learn</li>
-          <li>login</li>
+          <li>
+            <a href={`/practice`}>PracticeCode</a>
+          </li>
+          <li>
+            <a href={`/login`}>Sign in/Sign up</a>
+          </li>
+          <li>
+            <a href={`/admin`}>Admin</a>
+          </li>
         </ul>
       </nav>
     </Wrapper>

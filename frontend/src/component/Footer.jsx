@@ -35,10 +35,10 @@ const Footer = () => {
           <p>Copyright © 2024 {"<re/code>"}, Inc.</p>
         </div>
         <div className="legal-links">
-          <a href="#">Legal Stuff</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Security</a>
-          <a href="#">Website Accessibility</a>
+          <a href="#">Online Code Editor</a>
+          <a href="#">Learn Through Quizzes</a>
+          <a href="#">Online Problem Solving</a>
+          <a href="#">Contact Us</a>
           <a href="#">Manage Cookies</a>
         </div>
       </footer>

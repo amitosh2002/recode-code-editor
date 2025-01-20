@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-
+import contactImg from "../assets/contactForm.png";
 const ContactMe = () => {
   return (
     <ContactForm>
-      
+      <div className="img">
+        <img src={contactImg} alt="" />
+      </div>
       <form
         class="colorful-form"
         action="https://formspree.io/f/mgveanpz"
@@ -55,11 +57,20 @@ const ContactMe = () => {
   );
 };
 const ContactForm = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 250px;
+  img {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+  }
   .colorful-form {
-    max-width: 400px;
+    width: 400px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: #e6e9efd7;
     border-radius: 10px;
   }
 

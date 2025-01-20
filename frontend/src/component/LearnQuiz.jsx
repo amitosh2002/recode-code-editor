@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
+import quiz from "../assets/Quiz.png";
 // Register components for Chart.js
 ChartJS.register(
   CategoryScale,
@@ -27,6 +27,7 @@ const LearnQuiz = () => {
   const [score, setScore] = useState(0); // Track total score
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0); // Track correct answers count
   const [incorrectAnswersCount, setIncorrectAnswersCount] = useState(0); // Track incorrect answers count
+  const [tagPerformance, setTagPerformance] = useState({});
 
   // Fetch quiz questions (this could be multiple questions)
   const getQuizQuestions = async () => {
@@ -70,8 +71,54 @@ const LearnQuiz = () => {
       setCorrectAnswersCount((prevCount) => prevCount + 1);
     } else {
       setIncorrectAnswersCount((prevCount) => prevCount + 1);
-    }
+    } // Update tag-based performance
+    tags.forEach((tag) => {
+      const tagName = tag.name;
+
+      setTagPerformance((prevTagPerformance) => {
+        const newPerformance = { ...prevTagPerformance };
+
+        if (!newPerformance[tagName]) {
+          newPerformance[tagName] = { correct: 0, incorrect: 0, total: 0 };
+        }
+
+        newPerformance[tagName].total += 1;
+
+        if (selectedAnswer === correctAnswer) {
+          newPerformance[tagName].correct += 1;
+        } else {
+          newPerformance[tagName].incorrect += 1;
+        }
+
+        return newPerformance;
+      });
+    });
   };
+
+  const generateTagChartData = (tagName) => {
+    const performance = tagPerformance[tagName];
+
+    if (!performance) return null;
+
+    const { correct, incorrect } = performance;
+
+    return {
+      labels: [
+        `Correct Answers (${correct})`,
+        `Incorrect Answers (${incorrect})`,
+      ],
+      datasets: [
+        {
+          label: `Performance for ${tagName}`,
+          data: [correct, incorrect],
+          backgroundColor: ["#4CAF50", "#f44336"], // Green for correct, Red for incorrect
+          borderColor: ["#4CAF50", "#f44336"],
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
+
   const Loader = styled.div`
     /* From Uiverse.io by G4b413l */
     .three-body {
@@ -182,6 +229,31 @@ const LearnQuiz = () => {
       }
     }
   `;
+  const AnalysisSectionTag = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .chart-container {
+      width: 200px;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #333;
+    }
+  `;
+
   // If questions are still loading, display loading message
   if (quizQuestions.length === 0) {
     return (
@@ -221,26 +293,28 @@ const LearnQuiz = () => {
             <MarksAnalysis>
               <section class="layout">
                 <div class="grow1">
-                  <p>Correct Answer : {correctAnswersCount}</p>
+                  <strong>Correct Answer : {correctAnswersCount}</strong>
                 </div>
                 <div class="grow1">
                   {" "}
-                  <p>Incorrect Answer : {incorrectAnswersCount}</p>
+                  <strong>Incorrect Answer : {incorrectAnswersCount}</strong>
                 </div>
                 <div class="grow1">
                   {" "}
-                  <p>Total Question :{quizQuestions.length}</p>
+                  <strong>Total Question :{quizQuestions.length}</strong>
                 </div>
                 <div class="grow1">
                   {" "}
-                  <p>
+                  <strong>
                     Percentage :{" "}
                     {(correctAnswersCount / quizQuestions.length) * 100}%
-                  </p>
+                  </strong>
+                  <img src={quiz} alt="" />
                 </div>
               </section>
             </MarksAnalysis>
           </AnalysisSection>
+          <AnalysisSectionTag></AnalysisSectionTag>
         </div>
         <div class="body">
           <div>
@@ -254,12 +328,15 @@ const LearnQuiz = () => {
                 isCorrect,
                 category,
                 difficulty,
+                tags,
               }) => {
                 // Filter out any null or undefined values from the answers
                 const options = Object.entries(answers).filter(
                   ([key, value]) =>
                     value !== null && value !== undefined && value !== ""
                 );
+                const tagName =
+                  tags && tags.length > 0 ? tags[0].name : "No Tag";
 
                 return (
                   <QuizQuestion key={id}>
@@ -268,11 +345,12 @@ const LearnQuiz = () => {
                         <span className="steps">{id}</span>
                         <span className="steps">{category}</span>
                         <span className="steps">{difficulty}</span>
+                        <span className="steps">{tagName}</span>
                       </div>
                       <div className="info">
                         <span className="question">{question}</span>
                       </div>
-
+                      <hr />
                       <ol type={"A"}>
                         {options.map(([option, value]) => (
                           <li key={option}>
@@ -294,7 +372,6 @@ const LearnQuiz = () => {
                           </li>
                         ))}
                       </ol>
-
                       {selectedAnswer !== null && <p>Your score: {score}</p>}
                     </div>
                   </QuizQuestion>
@@ -314,7 +391,7 @@ const Container = styled.div`
   /* Ensure no scrollbars on the entire page */
   html,
   body {
-    height: 100%;
+    height: 100vh;
     margin: 0;
     overflow: hidden; /* Prevent scrolling on the entire page */
   }
@@ -351,14 +428,16 @@ const Container = styled.div`
 
 const MarksAnalysis = styled.div`
   .layout {
-    width: 100%;
-
+    margin-top: 30px;
+    width: 300px;
+    padding: 10px;
     display: flex;
-    gap: 16px;
+    flex-direction: column;
+    /* gap: 16px; */
   }
 
   .grow1 {
-    flex-grow: 1;
+    flex-grow: 1 1;
   }
 `;
 
@@ -366,19 +445,20 @@ const QuizQuestion = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+
+  /* margin: 20px; */
 
   .radio-input {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 30px;
     background: #fff;
     color: #000;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     width: 70%;
     max-width: 700px;
-    margin: 20px auto;
+    margin: 20px;
   }
 
   .info {
@@ -412,7 +492,7 @@ const QuizQuestion = styled.div`
   .option {
     background-color: #fff;
     padding: 8px;
-    margin: 5px 0;
+    margin: 8px;
     font-size: 16px;
     font-weight: 600;
     border-radius: 10px;

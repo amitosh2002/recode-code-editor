@@ -5,6 +5,8 @@ import { RiVoiceprintLine } from "react-icons/ri";
 import { SiConvertio } from "react-icons/si";
 import { IoIosSwitch } from "react-icons/io";
 import { Tooltip } from "react-tooltip";
+import { FaHome } from "react-icons/fa";
+import { MdConnectWithoutContact } from "react-icons/md";
 import { SiCompilerexplorer } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 const Toggle = () => {
@@ -13,15 +15,25 @@ const Toggle = () => {
       <div className="toogle">
         <ol>
           <li
-            data-tooltip-id="download"
-            data-tooltip-content="Download"
+            data-tooltip-id="Home"
+            data-tooltip-content="Home"
             data-tooltip-place="top"
           >
-            <a>
-              <FaDownload size={40} color="white" />
+            <a href={`/`}>
+              <FaHome size={40} color="white" />
             </a>
           </li>
-          <Tooltip id="download" />
+          <Tooltip id="Home" />
+          <li
+            data-tooltip-id="Editor"
+            data-tooltip-content="Editor"
+            data-tooltip-place="top"
+          >
+            <a href={`/editor`}>
+              <SiCompilerexplorer size={40} color="white" />
+            </a>
+          </li>
+          <Tooltip id="Editor" />
           <li
             data-tooltip-id="voice"
             data-tooltip-content="Voice to text"
@@ -45,31 +57,23 @@ const Toggle = () => {
           <Tooltip id="imgCode" />
 
           <li
-            data-tooltip-id="notDecide"
-            data-tooltip-content="notDecide"
+            data-tooltip-id="contact"
+            data-tooltip-content="Contact"
             data-tooltip-place="top"
           >
             <a href={`/contact`}>
-              <IoIosSwitch size={40} color="white" />
+              <MdConnectWithoutContact size={40} color="white" />
             </a>
           </li>
-          <Tooltip id="notDecide" />
-          <li
-            data-tooltip-id="Editor"
-            data-tooltip-content="Editor"
-            data-tooltip-place="top"
-          >
-            <a href={`/`}>
-              <SiCompilerexplorer size={40} color="white" />
-            </a>
-          </li>
-          <Tooltip id="Editor" />
+          <Tooltip id="contact" />
         </ol>
       </div>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
+  margin: 25px;
+
   .toogle {
     display: flex;
     justify-content: center;

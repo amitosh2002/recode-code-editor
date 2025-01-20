@@ -83,3 +83,145 @@ Ready to code? Join <re/code> and get started today!
 
 
 */
+
+import React from "react";
+import styled from "styled-components";
+import homePageBg from "../assets/Welcome to recode.png";
+import { NavLink } from "react-router-dom";
+const Home = () => {
+  return (
+    <HomeWrapper>
+      {" "}
+      <header>
+        <h1>Welcome to {"<re/code>"}</h1>
+        <p>
+          Your all-in-one coding platform for quick code execution, coding
+          quizzes, and practice challenges
+        </p>
+      </header>
+      <section className="features">
+        <div className="feature">
+          <h3>One-Line Code Compilation</h3>
+          <p>
+            Instantly write and run your code in a single line, with no setup
+            required. Perfect for quick testing and debugging.
+          </p>
+        </div>
+        <div className="feature">
+          <h3>Coding Quizzes</h3>
+          <p>
+            Take interactive quizzes to test your programming knowledge and
+            improve your coding skills. Compete with others and track your
+            progress!
+          </p>
+        </div>
+        <div className="feature">
+          <h3>Practice Coding Questions</h3>
+          <p>
+            Enhance your problem-solving skills with thousands of coding
+            challenges, ranging from beginner to expert level.
+          </p>
+        </div>
+      </section>
+      <section className="cta">
+        <h2>Ready to Start Coding?</h2>
+        <p>
+          Join {"<re/code>"} today and take your coding skills to the next
+          level!
+        </p>
+        <NavLink to={`/editor`}>
+          <button>Start Coding Now</button>
+        </NavLink>
+      </section>
+      <footer>
+        {/* <p style="text-align: center; padding: 20px; background-color: #0d47a1; color: white;">&copy; 2024 {"<re/code>"}. All Rights Reserved.</p> */}
+      </footer>
+    </HomeWrapper>
+  );
+};
+const HomeWrapper = styled.div`
+  header {
+    /* background-color: #0d47a1; */
+    background-image: url(${homePageBg});
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-size: 1550px;
+    color: #01010a;
+    padding: 60px 0;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 3rem;
+    font-family: "Dancing Script", cursive;
+  }
+
+  header p {
+    font-size: 1.2rem;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 50px;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .feature {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-10px);
+  }
+
+  .feature h3 {
+    color: #0d47a1;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .feature p {
+    color: #555;
+  }
+
+  .cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .cta button {
+    background-color: #0d47a1;
+    color: white;
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+
+  .cta button:hover {
+    background-color: #1565c0;
+  }
+
+  @media (max-width: 768px) {
+    .features {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .features {
+      grid-template-columns: 1fr;
+    }
+  }
+`;
+export default Home;
