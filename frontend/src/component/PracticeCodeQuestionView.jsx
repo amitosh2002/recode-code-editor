@@ -23,7 +23,7 @@ const PracticeCodeQuestionView = ({
         </div>
         <div className="TestCase">
           <ol>
-            {testCases.map((testCase, index) => (
+            {testCases?.map((testCase, index) => (
               <li key={index}>
                 Example {index + 1}: Input: {testCase.input} Output:{" "}
                 {testCase.output}

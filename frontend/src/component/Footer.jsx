@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/recode_logo-removebg-preview.png";
 const Footer = () => {
+  const today = new Date();
+  const copWriteYr = today.getFullYear();
+  // console.log(today);
+
   return (
     <Wrapper>
       <footer>
@@ -32,7 +36,9 @@ const Footer = () => {
          
         <div className="hubspot-logo">
           <img src={logo} alt={"<re/code>"} style={{ width: "100px" }} />
-          <p>Copyright © 2024 {"<re/code>"}, Inc.</p>
+          <p>
+            Copyright © {copWriteYr} {"<re/code>"}, Inc.
+          </p>
         </div>
         <div className="legal-links">
           <a href="#">Online Code Editor</a>

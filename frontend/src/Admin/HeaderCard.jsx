@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-const HeaderCard = () => {
+const HeaderCard = ({ questionCount, tittle }) => {
   return (
     <CardWrapper>
       <div class="card">
         <div class="title">
           <span></span>
-          <p class="title-text">Sales</p>
+          <p class="title-text">{tittle}</p>
         </div>
         <div class="data">
-          <p>39,500</p>
+          <p>{questionCount}</p>
         </div>
       </div>
     </CardWrapper>

@@ -1,30 +1,17 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "http://localhost:5001",
+  baseURL: "http://localhost:6001/api",
 });
 
 export const getQuestionList = () => {
-  return API.get("/questions");
+  return API.get("/allQuestion");
 };
-export const addQuestions = async () => {
-  try {
-    const response = await axios.post(url, question, {
-      headers: {
-        "Content-Type": "application/json", // Set the correct content type
-      },
-    });
-    console.log("Question added successfully:", response.data);
-  } catch (error) {
-    if (error.response) {
-      // Server responded with a status other than 2xx
-      console.error("Error response:", error.response.data);
-    } else if (error.request) {
-      // Request was made but no response received
-      console.error("No response received:", error.request);
-    } else {
-      // Other errors
-      console.error("Error setting up the request:", error.message);
-    }
-  }
-  return API.post("/questions", data);
+export const deleteQuestion = (id) => {
+  return API.delete(`/deleteId/${id}`);
+};
+export const getSingleQuestion = (id) => {
+  return API.get(`/singleQuestion/${id}`);
+};
+export const updateQuestion = (id, body) => {
+  return API.put(`/update/${id}`, body);
 };

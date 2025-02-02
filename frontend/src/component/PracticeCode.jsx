@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getQuestionList } from "../Services/QuestionServices";
 import { useSelector } from "react-redux";
 import { updateQuestionProblems } from "../Redux/Slices/AdminSlice";
@@ -7,48 +7,43 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 const PracticeCode = () => {
   const dispatch = useDispatch();
-  const QuestionProblem = useSelector((state) => state.mainComponent.problems);
+  const [allQn, setAllQn] = useState([]);
+  // const QuestionProblem = useSelector((state) => state.mainComponent.problems);
   const questionList = async () => {
     try {
       const res = await getQuestionList();
-      //   console.log(res.data);
-      dispatch(updateQuestionProblems(res.data));
-      //   console.log(questionList);
-      //   console.log(QuestionProblem);
+      setAllQn(res.data.allQuestion); // update state with the fetched data
+      // console.log(res.data.allQuestion);
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  // Fetch question list when component mounts or when question list changes
   useEffect(() => {
     questionList();
-  }, [QuestionProblem]);
-  //   console.log("jsfnskfn", QuestionProblem);
+  }, []);
   return (
     <div>
       <QuestionContainer>
         <div className="container">
           <header>
             <h1>Questions</h1>
-            <p>See your scheduled events from your profile events links.</p>
+            <p>
+              Unleash your potential, one challenge at a time—turn your ideas
+              into code and watch them transform the world!
+            </p>
           </header>
-          <nav className="tabs">
+          {/* <nav className="tabs">
             <button className="tab active">Upcoming</button>
             <button className="tab">Pending</button>
             <button className="tab">Recurring</button>
             <button className="tab">Past</button>
             <button className="tab">Cancelled</button>
-          </nav>
+          </nav> */}
 
-          {QuestionProblem.map((problem, index) => {
+          {allQn.map((problem, index) => {
             const { description, _id, questionText, tittle } = problem;
             return (
-              //   <div key={_id}>
-              //     <h2>{tittle}</h2>
-              //     <p>{description}</p>
-              //     <p>{questionText}</p>
-              //   </div>
               <div className="bookings-list" key={index}>
                 <div className="booking">
                   <div className="date">

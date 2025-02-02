@@ -1,57 +1,137 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import QuestionCard from "./QuestionCard";
-import { useSelector } from "react-redux";
-
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { deleteQuestion, getQuestionList } from "../Services/QuestionServices";
+import axios from "axios";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateTotalQuestionCount } from "../Redux/Slices/AdminSlice";
 const QuestionList = () => {
-  const allQuestion = useSelector((state) => state.mainComponent.problems);
-  console.log("bcvhfc", allQuestion);
+  const dispatch = useDispatch();
+  const [question, setQuestion] = useState([]);
+  const questionList = async () => {
+    try {
+      const res = await getQuestionList();
+      setQuestion(res.data.allQuestion);
+      dispatch(updateTotalQuestionCount(question.length));
+
+      console.log(res.data.allQuestion);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    questionList();
+  }, []);
+  const submitDelete = ({ id }) => {
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to delete this question?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            handleDeleteQuestion(id);
+          },
+        },
+        {
+          label: "No", // Dialog closes automatically without any action
+        },
+      ],
+    });
+  };
+
+  const handleDeleteQuestion = async (id) => {
+    try {
+      const response = await deleteQuestion(id);
+      console.log("Question deleted successfully:", response.data);
+      setQuestion(question.filter((q) => q._id !== id));
+      // Handle success (e.g., update UI, show success message)
+    } catch (error) {
+      console.error("Error deleting question:", error);
+      // Handle error (e.g., display error message to user)
+    }
+  };
 
   return (
     <QuestionContainerAdmin>
       <div class="container">
         <div class="header">
-          <h1>Schedule Management</h1>
-          <p>Manage all your existing schedules or add a new schedule.</p>
-          <button class="add-schedule-btn">+ Add New Schedule</button>
+          <h1>Question Management</h1>
+          <p>Manage all your existing question or add a new question.</p>
+          <button
+            class="add-schedule-btn"
+            onClick={() => {
+              submit();
+            }}
+          >
+            + Add New Question
+          </button>
         </div>
-        <table class="schedule-table">
-          <thead>
-            <tr>
-              <th>Sl No</th>
-              <th>Employee</th>
-              <th>Schedule</th>
-              <th>Period</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {allQuestion.map((question, index) => {
-                const { tittle } = question;
+        <div className="table-body">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>Tittle</th>
+                <th>Question</th>
+                <th>Difficulty</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* <tr> */}
+              {question.map((question, index) => {
+                const {
+                  tittle,
+                  difficulty,
+                  questionText,
+                  _id,
+                  testCases,
+                  description,
+                } = question;
+                const data = {
+                  isUpdate: false,
+                  tittle: tittle,
+                  difficulty: difficulty,
+                  questionText: questionText,
+                  _id: _id,
+                  testCases: testCases,
+                  description,
+                };
                 return (
-                  <>
+                  <tr>
                     <td>{index + 1}</td>
                     <td class="employee-info">
-                      {/* <img src="tara.jpg" alt="Tara Peter"> */}
-                      <span>{tittle}r</span>
+                      <span>{tittle}</span>
                     </td>
-                    <td>Morning Shift</td>
-                    <td>Nov 5 - Nov 15</td>
+                    <td>{questionText}</td>
                     <td>
-                      <span class="status inactive">Inactive</span>
+                      <span class="status inactive">{difficulty}</span>
                     </td>
                     <td class="actions">
-                      <button class="edit-btn">✏️</button>
-                      <button class="delete-btn">🗑️</button>
+                      <NavLink to="/admin/questionForm" state={data}>
+                        <button class="edit-btn">✏️</button>
+                      </NavLink>
+
+                      <button
+                        class="delete-btn"
+                        onClick={() => {
+                          // handleDeleteQuestion(_id);
+                          submitDelete({ id: _id });
+                        }}
+                      >
+                        🗑️
+                      </button>
                     </td>
-                  </>
+                  </tr>
                 );
               })}
-            </tr>
-          </tbody>
-        </table>
+              {/* </tr> */}
+            </tbody>
+          </table>
+        </div>
       </div>
     </QuestionContainerAdmin>
   );
@@ -65,7 +145,11 @@ const QuestionContainerAdmin = styled.div`
   margin: 0;
   padding: 0;
   background-color: #f5f7fa;
-
+  .table-body {
+    max-height: 500px; /* Fixed height for the container */
+    height: 500px; /* Fixed height for the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
   .container {
     max-width: 900px;
     margin: 20px auto;

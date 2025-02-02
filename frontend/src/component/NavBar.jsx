@@ -20,13 +20,13 @@ const NavBar = () => {
           </li>
           {/* </NavLink> */}
           <li>
-            <a href={`/contact`}>Contact</a>
-          </li>
-          <li>
             <a href={`/learn`}>learn</a>
           </li>
           <li>
             <a href={`/practice`}>PracticeCode</a>
+          </li>{" "}
+          <li>
+            <a href={`/contact`}>Contact</a>
           </li>
           <li>
             <a href={`/login`}>Sign in/Sign up</a>

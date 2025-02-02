@@ -3,6 +3,7 @@ import { CgAddR } from "react-icons/cg";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import logo from "../assets/recode_logo-removebg-preview.png";
+import { NavLink } from "react-router-dom";
 // main culprit is iporting setCurrentComponent
 import { setCurrentComponent } from "../Redux/Slices/AdminSlice";
 const AdminRightPanel = () => {
@@ -20,29 +21,41 @@ const AdminRightPanel = () => {
         Admin Control Panel
       </label>
       <div className="panel">
-        <Button
-          onClick={() => handlePageChange("QuestionPanel")}
-          aria-label="Add Question"
-        >
-          <IconWrapper>
-            <CgAddR />
-          </IconWrapper>
-          Add Question
-        </Button>
-
-        <Button
-          onClick={() => handlePageChange("QuestionList")}
-          aria-label="View Question List"
-        >
-          Question List
-        </Button>
-
-        <Button
-          onClick={() => handlePageChange("Userlist")}
-          aria-label="View User List"
-        >
-          User List
-        </Button>
+        <NavLink to="/admin">
+          <Button
+            // onClick={() => handlePageChange("Userlist")}
+            aria-label="View User List"
+          >
+            Home
+          </Button>
+        </NavLink>
+        <NavLink to="questionForm">
+          <Button
+            // onClick={() => handlePageChange("QuestionPanel")}
+            aria-label="Add Question"
+          >
+            <IconWrapper>
+              <CgAddR />
+            </IconWrapper>
+            Add Question
+          </Button>
+        </NavLink>
+        <NavLink to="questionList">
+          <Button
+            // onClick={() => handlePageChange("QuestionList")}
+            aria-label="View Question List"
+          >
+            Question List
+          </Button>
+        </NavLink>
+        <NavLink to="userlist">
+          <Button
+            // onClick={() => handlePageChange("Userlist")}
+            aria-label="View User List"
+          >
+            User List
+          </Button>
+        </NavLink>
       </div>
     </RightPanel>
   );

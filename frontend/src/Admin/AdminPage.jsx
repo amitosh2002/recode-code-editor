@@ -6,17 +6,19 @@ import QuestionForm from "./QuestionForm";
 import QuestionList from "./QuestionList";
 import Userlist from "./Userlist";
 import { useSelector } from "react-redux";
+import { Routes, Route, Outlet } from "react-router-dom";
+import AdminGraph from "./AdminGraph";
 const AdminPage = () => {
-  const currentComponent = useSelector(
-    (state) => state.mainComponent.currentComponent
-  );
+  // const currentComponent = useSelector(
+  //   (state) => state.mainComponent.currentComponent
+  // );
 
-  console.log(
-    "Current Redux State:",
-    useSelector((state) => state)
-  ); // Add this to debug
-  if (!currentComponent)
-    return <div>Error: Current Component is undefined</div>;
+  // console.log(
+  //   "Current Redux State:",
+  //   useSelector((state) => state)
+  // ); // Add this to debug
+  // if (!currentComponent)
+  //   return <div>Error: Current Component is undefined</div>;
 
   return (
     <AdminWrapper>
@@ -29,9 +31,8 @@ const AdminPage = () => {
             <AdminRightPanel />
           </aside>
           <main className="page-main">
-            {currentComponent === "Userlist" && <Userlist />}
-            {currentComponent === "QuestionPanel" && <QuestionForm />}
-            {currentComponent === "QuestionList" && <QuestionList />}
+            {/* <AdminGraph /> */}
+            <Outlet />
           </main>
         </BodyWrapper>
       </div>

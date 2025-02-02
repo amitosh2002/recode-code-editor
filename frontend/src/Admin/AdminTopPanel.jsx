@@ -1,11 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import HeaderCard from "./HeaderCard";
-
+import { useSelector } from "react-redux";
 const AdminTopPanel = () => {
+  const questionCount = useSelector(
+    (state) => state.mainComponent.totalQuestion
+  );
+  console.log(questionCount);
+
   return (
     <TopWrapper>
-      <HeaderCard />
+      <HeaderCard questionCount={questionCount} tittle={"Total Questions"} />
       <HeaderCard />
       <HeaderCard />
     </TopWrapper>

@@ -15,6 +15,11 @@ import Login from "./component/Login";
 import SignUp from "./component/SignUp";
 import AdminPage from "./Admin/AdminPage";
 import PracticeCodePanel from "./component/PracticeCodePanel";
+import QuestionList from "./Admin/QuestionList";
+import Userlist from "./Admin/Userlist";
+import QuestionForm from "./Admin/QuestionForm";
+import AdminGraph from "./Admin/AdminGraph";
+import { Navigate } from "react-router-dom";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -60,7 +65,29 @@ const App = () => {
     {
       path: "/admin",
       element: <AdminPage />,
+      children: [
+        {
+          path: "questionList",
+          element: <QuestionList />,
+        },
+        {
+          index: true,
+          element: <AdminGraph />, // 👈 Redirect to "/admin/graph"
+        },
+        {
+          path: "questionForm",
+          element: <QuestionForm />,
+        },
+        {
+          path: "userlist",
+          element: <Userlist />,
+        },
+      ],
     },
+    // {
+    //   path: "/questionList",
+    //   element: <QuestionList />,
+    // },
   ]);
   return (
     <>

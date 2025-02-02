@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentComponent: "Userlist",
   problems: [],
+  totalQuestion: 0,
 };
 const mainComponentSlice = createSlice({
   name: "mainComponent",
@@ -17,22 +18,17 @@ const mainComponentSlice = createSlice({
       // state.data = action.payload;
       state.problems = [...state.problems, ...action.payload]; //append the data in the problems array
     },
-    // getQuestion: async (state, action) => {
-    //   const url = "http://localhost:5001/questions"; // Update with your backend's URL
-    //   try {
-    //     const res = await fetch(url);
-    //     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    //     const data = await res.json();
-    //     dispatch(updateQuestionProblems(data));
-    //   } catch (error) {
-    //     console.error("Error fetching questions:", error);
-    //   }
-    // },
+    updateTotalQuestionCount: (state, action) => {
+      state.totalQuestion = action.payload; // Update totalQuestionCount state with new data
+    },
   },
 });
 
-export const { setCurrentComponent, updateQuestionProblems, getQuestion } =
-  mainComponentSlice.actions;
+export const {
+  setCurrentComponent,
+  updateQuestionProblems,
+  updateTotalQuestionCount,
+} = mainComponentSlice.actions;
 export default mainComponentSlice.reducer;
 
 // export default mainComponent.reducer;
