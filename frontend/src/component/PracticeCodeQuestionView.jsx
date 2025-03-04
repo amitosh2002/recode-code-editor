@@ -9,6 +9,8 @@ const PracticeCodeQuestionView = ({
   questionText,
   testCases,
 }) => {
+  console.log("hello", description, tittle, questionText, testCases);
+
   return (
     <QuestionViewWrapper>
       <div className="container">

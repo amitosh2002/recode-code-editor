@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import registerImg from "../assets/registration.png";
+import { useNavigate } from "react-router-dom";
+import { createAccount } from "../AuthControl/authService";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -19,8 +22,22 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // handleSignup();
     console.log(user);
   };
+
+  // const handleSignup = async (e) => {
+  //   e.preventDefault();
+  //       try {
+  //           await createAccount(user.email, user.password, user.firstName );
+  //           console.log('Account created successfully!');
+  //           navigate('/login'); // Redirect to login page after successful signup.
+  //           // Optionally, you can log the user in automatically here.
+  //       } catch (err) {
+  //           console.log(err.message );
+  //       }
+  //   };
+
   return (
     <SignUpContainer>
       <div className="img">

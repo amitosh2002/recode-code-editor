@@ -1,8 +1,3 @@
-// const express = require("express");
-// const router = express.Router();
-// const mongoose = require("mongoose");
-// const cors = require("cors"
-// );
 import bodyParser from "body-parser";
 const app = express();
 import express from "express";
@@ -10,6 +5,7 @@ import { Router } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import route from "./Router/questionRoutes.js";
+import userRoute from "./Router/userRoutes.js";
 import dotenv from "dotenv";
 app.use(bodyParser.json());
 app.use(cors());
@@ -29,3 +25,4 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api", route);
+app.use("/api/auth", userRoute);

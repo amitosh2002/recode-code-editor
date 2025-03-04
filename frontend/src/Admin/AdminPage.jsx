@@ -8,6 +8,7 @@ import Userlist from "./Userlist";
 import { useSelector } from "react-redux";
 import { Routes, Route, Outlet } from "react-router-dom";
 import AdminGraph from "./AdminGraph";
+import NavBar from "../component/NavBar";
 const AdminPage = () => {
   // const currentComponent = useSelector(
   //   (state) => state.mainComponent.currentComponent
@@ -22,6 +23,7 @@ const AdminPage = () => {
 
   return (
     <AdminWrapper>
+      <NavBar />
       <div className="grid">
         <header className="page-header">
           <AdminTopPanel />

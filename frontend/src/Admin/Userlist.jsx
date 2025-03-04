@@ -1,142 +1,150 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import { deleteUser, getUserList } from "../Services/UserServices";
+import { confirmAlert } from "react-confirm-alert";
 const Userlist = () => {
+  const [user, setUser] = useState([]);
+
+  const getUser = async () => {
+    try {
+      const res = await getUserList();
+      setUser(res.data.allUser);
+
+      console.log(res);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  // alert for delete confirmation
+
+  const submitDelete = ({ id }) => {
+    confirmAlert({
+      title: "Confirm to Remove",
+      message: "Are you sure to Remove this user?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            handleDeleteUser(id);
+          },
+        },
+        {
+          label: "No", // Dialog closes automatically without any action
+        },
+      ],
+    });
+  };
+
+  const handleDeleteUser = async (id) => {
+    // console.log(id);
+    const deltedUser = await deleteUser(id);
+    console.log(deltedUser);
+    setUser(user.filter((q) => q._id !== id));
+
+    alert("User Deleted Successfully", id);
+  };
+
   return (
     <UserListWrapper>
-      /* From Uiverse.io by Javierrocadev */
-      <div class="card">
-        <p class="title">Who to follow</p>
-        <div class="user__container">
-          <div class="user">
-            <div class="image"></div>
-            <div class="user__content">
-              <div class="text">
-                <span class="name">Name</span>
-                <p class="username">@namedlorem</p>
+      {user.map((user) => {
+        const { id, userName, userEmail, _id } = user;
+        return (
+          <div className="card" key={_id}>
+            <div className="img"></div>
+            <div className="textBox">
+              <div className="textContent">
+                <p className="h1">{userName}</p>
+                <button className="deleteBtn" onClick={() => submitDelete(_id)}>
+                  Delete
+                </button>
               </div>
-              <button class="follow">Follow</button>
+              <p className="p">{userEmail}</p>
             </div>
           </div>
-          <div class="user">
-            <div class="image"></div>
-            <div class="user__content">
-              <div class="text">
-                <span class="name">Name</span>
-                <p class="username">@namedlorem</p>
-              </div>
-              <button class="follow">Follow</button>
-            </div>
-          </div>
-          <div class="user">
-            <div class="image"></div>
-            <div class="user__content">
-              <div class="text">
-                <span class="name">Name</span>
-                <p class="username">@namedlorem</p>
-              </div>
-              <button class="follow">Follow</button>
-            </div>
-          </div>
-        </div>
-        <a class="more" href="#">
-          See more
-        </a>
-      </div>
+        );
+      })}
     </UserListWrapper>
   );
 };
+
 const UserListWrapper = styled.div`
-  /* From Uiverse.io by Javierrocadev */
+  display: flex;
+  flex-wrap: wrap;
+
   .card {
-    width: 350px;
-    height: 350px;
-    background: #e8eaea;
-    border-radius: 15px;
+    width: 100%;
+    max-width: 290px;
+    height: 70px;
+    background: #353535;
+    border-radius: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .title,
-  .more {
-    padding: 10px 15px;
-  }
-
-  .user {
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 15px;
+    justify-content: left;
+    backdrop-filter: blur(10px);
+    transition: 0.5s ease-in-out;
+    margin: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
   }
 
-  .user__content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow: 1;
+  .card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
   }
 
-  .user__container {
-    display: flex;
-    flex-direction: column;
+  .img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    border-radius: 10px;
+    background: linear-gradient(#d7cfcf, #9198e5);
   }
 
-  .title {
-    font-weight: 900;
-    font-size: 1.3em;
+  .card:hover > .img {
+    transition: 0.5s ease-in-out;
+    background: linear-gradient(#9198e5, #712020);
   }
 
-  .name {
-    font-weight: 800;
-  }
-
-  .username {
-    font-size: 0.9em;
-    color: #64696e;
-  }
-
-  .image {
-    width: 60px;
-    height: 60px;
-    background: rgb(22, 19, 70);
-    background: linear-gradient(
-      295deg,
-      rgba(22, 19, 70, 1) 41%,
-      rgba(89, 177, 237, 1) 100%
-    );
-    border-radius: 50%;
-    margin-right: 15px;
-  }
-
-  .follow {
-    border: none;
-    border-radius: 25px;
-    background-color: #0f1113;
+  .textBox {
+    width: calc(100% - 90px);
+    margin-left: 10px;
     color: white;
-    padding: 8px 15px;
-    font-weight: 700;
+    font-family: "Poppins", sans-serif;
   }
 
-  .more {
-    display: block;
-    text-decoration: none;
-    color: rgb(29, 155, 240);
-    font-weight: 800;
+  .textContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .user:hover {
-    background-color: #b3b6b6;
+  .h1 {
+    font-size: 16px;
+    font-weight: bold;
   }
 
-  .more:hover {
-    background-color: #b3b6b6;
-    border-radius: 0px 0px 15px 15px;
+  .p {
+    font-size: 12px;
+    font-weight: lighter;
   }
 
-  .follow:hover {
-    background-color: #2c3136;
+  .deleteBtn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  .deleteBtn:hover {
+    background: darkred;
   }
 `;
+
 export default Userlist;

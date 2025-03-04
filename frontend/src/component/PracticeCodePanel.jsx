@@ -26,12 +26,7 @@ const PracticeCodePanel = (props) => {
   const handleSingleQuestion = async (pid) => {
     try {
       const res = await getSingleQuestion(pid);
-      // // await getSingleQuestion(pid);
-      // // const one = res.data.singleQuestion;
-      // setCurrQuestion(res.data.singleQuestion);
-      console.log(currQuestion);
-
-      console.log(res.data.singleQuestion);
+      setCurrQuestion(res.data.singleQuestion);
     } catch (error) {
       console.log(error.message);
     }
@@ -70,7 +65,7 @@ const PracticeCodePanel = (props) => {
     <>
       <PracticeCodeWrapper>
         <PageNavigation tittle={currQuestion.tittle} />
-        <Stopwatch />
+        {/* <Stopwatch /> */}
         <div className="container">
           <div className="QuestionPreview">
             <PracticeCodeQuestionView

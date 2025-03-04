@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const HeaderCard = ({ questionCount, tittle }) => {
+  console.log(questionCount, tittle);
+
   return (
     <CardWrapper>
       <div class="card">

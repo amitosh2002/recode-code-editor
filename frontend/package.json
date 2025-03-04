@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@monaco-editor/react": "^4.6.0",
+    "@mui/material": "^6.4.6",
     "@reduxjs/toolkit": "^2.2.8",
+    "appwrite": "^17.0.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
     "monaco-editor": "^0.52.0",

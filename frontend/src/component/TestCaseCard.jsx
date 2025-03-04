@@ -5,7 +5,7 @@ import { ImCross } from "react-icons/im";
 const TestCaseCard = ({ outputCode, testCases }) => {
   return (
     <TestCaseWrapper>
-      {testCases.map((testCase, index) => {
+      {testCases?.map((testCase, index) => {
         // Normalize both expected and actual output
         const expectedOutput = String(testCase.output).trim();
         const actualOutput = String(outputCode).trim();

@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/recode_logo-removebg-preview.png";
 import { NavLink } from "react-router-dom";
-const NavBar = () => {
+const NavBar = ({ user, handleLogout}) => {
+  
   return (
     <Wrapper>
       <nav>
@@ -16,24 +17,39 @@ const NavBar = () => {
           </li>
           {/* <NavLink to={`/`}> */}
           <li>
-            <a href={`/`}>Home</a>
+            <NavLink to="/">Home</NavLink>
           </li>
           {/* </NavLink> */}
           <li>
-            <a href={`/learn`}>learn</a>
+            <NavLink to="/learn">Learn more</NavLink>
           </li>
           <li>
-            <a href={`/practice`}>PracticeCode</a>
+            {/* <a href={`/practice`}>PracticeCode</a> */}
+            <NavLink to="/practice">Practice</NavLink>
           </li>{" "}
           <li>
-            <a href={`/contact`}>Contact</a>
+            <NavLink to="/contact">Contact</NavLink>
           </li>
           <li>
-            <a href={`/login`}>Sign in/Sign up</a>
+            <NavLink to="/login">Login</NavLink>
           </li>
           <li>
-            <a href={`/admin`}>Admin</a>
+            <NavLink to="/admin">Admin</NavLink>
           </li>
+          {/* {user ? (
+        <>
+          <span>Welcome, {user.name}!</span>
+          <button onClick={handleLogout}>Logout</button>
+          {user.labels?.includes("admin") && <NavLink to="/admin">Admin</NavLink>}
+        </>
+      ) : (
+        <>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+          <NavLink to="/signup">Sign Up</NavLink>
+        </>
+      )} */}
         </ul>
       </nav>
     </Wrapper>
