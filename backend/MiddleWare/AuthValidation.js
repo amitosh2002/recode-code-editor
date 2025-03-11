@@ -7,7 +7,7 @@ const schema =Joi.object({
     name: Joi.string().min(6).required(),
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
-    role: Joi.string().min(30).required()  
+    role: Joi.string().min(3).required()  
 })
 
 const {error} = schema.validate(req.body)
@@ -18,8 +18,8 @@ export const loginValidation =(req,res,next) => {
 
 const schema =Joi.object({
     email: Joi.string().min(6).required().email(),
-    password: Joi.string().min(6).required(),
-    role: Joi.string().min(30).required()  
+    password: Joi.string().min(3).required(),
+    role: Joi.string().min(3).required()  
 })
 
 const {error} = schema.validate(req.body)

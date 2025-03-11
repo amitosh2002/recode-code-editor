@@ -8,7 +8,10 @@ import route from "./Router/questionRoutes.js";
 import userRoute from "./Router/userRoutes.js";
 import dotenv from "dotenv";
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Allow requests from frontend
+  credentials: true, // Allow cookies and authorization headers
+}));
 dotenv.config();
 const PORT = process.env.PORT || 6001;
 const URI = process.env.MONGO_URI;

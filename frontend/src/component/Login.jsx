@@ -1,33 +1,69 @@
-import React from "react";
 import styled from "styled-components";
 import loginImg from "../assets/signin2.png";
-import { login, getUser, isAdmin } from "../AuthControl/authService"
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { onerrorToast, onSucessToast } from "./Tostify";
+import { loginUser } from "../Services/UserServices";
+import { handleUserDetails } from "../Redux/Actions/actions";
+import { useDispatch } from "react-redux";
 const Login = () => {
-   const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
-    const handleLogin = async () => {
-    try {
-      await login(email, password);
-      const user = await getUser();
-      if (user) {
-        const adminStatus = await isAdmin();
-        if (adminStatus) {
-          navigate("/admin");
-        } else {
-          navigate("/");
-          console.log(505);
-          
-        }
-      }
-    } catch {
-      alert("Invalid credentials");
-      console.log(404);
-      
-    }
-  };
+  const dispatch = useDispatch();
+   const [loginCredentials,setLoginCredentials] =useState({
+    email: '',
+    password: '',
+    role: '',
 
+   })
+   const handleChange = (e) => {
+    const {name, value} = e.target;
+    setLoginCredentials({
+      ...loginCredentials,
+      [name]:value,
+    });
+   }
+ const loginAuthentication = async () => {
+  try {
+    console.log("Starting login...");
+    const res = await loginUser(loginCredentials);
+    console.log("API Response:", res);
+
+    if (!res || !res.data) {
+      console.error("Invalid API response:", res);
+      onerrorToast("Invalid server response.");
+      return;
+    }
+
+    const { name, email, role, success, token, msg ,id,password} = res.data;
+
+    console.log("Success Value:", success, "| Type:", typeof success);
+
+    if (success === true || success === "true") {
+      sessionStorage.setItem("token", token);
+      const userDetails = { name, email, role,id ,password};
+      localStorage.setItem("userDetails", JSON.stringify(userDetails));
+
+     dispatch(handleUserDetails(userDetails));
+      navigate("/");
+      onSucessToast(msg);
+    } else {
+      console.warn("Login failed. Showing error toast.");
+      onerrorToast(msg || "Login failed. Please try again.");
+    }
+  } catch (err) {
+    console.error("Full Error Object:", err);
+
+    const errorMessage = err.response?.data?.msg || err.message || "Something went wrong!";
+    onerrorToast(errorMessage);
+  }
+};
+   const handleLogin=(e)=>{
+    e.preventDefault();
+    console.log(loginCredentials);
+    loginAuthentication()
+    // navigate('/home')
+    
+   } 
   return (
     <LoginContainer>
       <div className="img">
@@ -37,14 +73,25 @@ const Login = () => {
         <p className="title">Login</p>
         <form className="form">
           <div className="input-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="text"
-              name="username"
-              id="username"
-              placeholder="Username"
-              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+              id="email"
+              placeholder="email"
+              onChange={handleChange}
+              value={loginCredentials.email}
             />
+          </div>
+          <div className="input-group">
+            <label htmlFor="role">Role</label>
+            <select style={{padding: "8px", borderRadius: "10px", maxWidth: "fit-content",maxHeight: "fit-content",border: "1px solid gray",backgroundColor: "white",cursor: "pointer", }}
+ name="role" id="role" onChange={handleChange} value={loginCredentials.role}>
+              <option value="select">Select Role</option>
+              <option value="admin">Admin</option>
+              <option value="student">Student</option>
+              <option value="dev">Dev</option>
+            </select>
           </div>
           <div className="input-group">
             <label htmlFor="password">Password</label>
@@ -53,7 +100,8 @@ const Login = () => {
               name="password"
               id="password"
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
+              value={loginCredentials.password}
             />
             <div className="forgot">
               <a rel="noopener noreferrer" href="#">
@@ -61,7 +109,7 @@ const Login = () => {
               </a>
             </div>
           </div>
-          <button onClick={handleLogin} className="sign">Sign in</button>
+          <button onClick={handleLogin} style={{cursor:"pointer"}} className="sign">Sign in</button>
         </form>
         <div className="social-message">
           <div className="line"></div>

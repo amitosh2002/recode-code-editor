@@ -5,13 +5,67 @@ import { VscPassFilled } from "react-icons/vsc";
 import { ImCross } from "react-icons/im";
 import TestCaseCard from "./TestCaseCard";
 import PracticeCodeTestArea from "./PracticeCodeTestArea";
+import { handleSubmitAnswers } from "../Redux/Actions/actions";
+import { onSucessToast,onerrorToast } from "./Tostify";
+import { submitTest } from "../Services/UserServices";
+import { useSelector } from "react-redux";
 
-const TestCaseOutput = ({ testCases, language, editorRef }) => {
+const TestCaseOutput = ({ testCases, language, editorRef ,currQuestion}) => {
   const [outputCode, setOutputCode] = useState(null);
   const [waiting, setWaiting] = useState(false);
   const [IsError, setIsError] = useState(false);
   const [testCaseComponent, setTestCaseComponent] = useState(false);
   const [outputComponent, setOutputComponent] = useState(false);
+  // console.log("testCaseComponent", currQuestion._id );
+  const userDetails = useSelector((state)=>state.userReducer.userDetails)
+
+console.log(userDetails ,"ssnj");
+
+  const submitTestData ={
+    id:userDetails.id,
+  testDetails: { // Added a key 'testDetails' to wrap the inner object
+    date: new Date().toISOString().slice(0, 10),
+    passed: "",
+    failed: "",
+    questionId: currQuestion._id || "",
+    questionDetails: currQuestion.description || "",
+    questionAnswer: testCases || "",
+    answerStatus: "",
+    feedback: "",
+    report: [],
+  },}
+
+  console.log(submitTestData);
+const handleOnSubmit = async () => {
+  if (!submitTestData || !submitTestData.testDetails) {
+    onerrorToast("Cannot Submit Answers, please try again");
+    return;
+  }
+
+  console.log("Sending Data:", JSON.stringify(submitTestData, null, 2));
+
+  try {
+    const res = await submitTest({
+      id: submitTestData.id, 
+      testDetails: submitTestData.testDetails, 
+    });
+
+    if (!res) {
+      onerrorToast("Cannot Submit Answers, please try again");
+      return;
+    } else {
+      onSucessToast("Successfully Submitted Answers");
+      console.log("Response Data:", res);
+    }
+  } catch (error) {
+    console.error("Submit Error:", error);
+    onerrorToast(error.message);
+  }
+
+  console.log("Submit Clicked");
+};
+
+
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue();
     if (!sourceCode) return;
@@ -31,7 +85,7 @@ const TestCaseOutput = ({ testCases, language, editorRef }) => {
   return (
     <div>
       <ButtonPossitionWrapper>
-        <Button
+        {/* <Button
           onClick={() => {
             runCode(), setOutputComponent(true), setTestCaseComponent(false);
           }}
@@ -44,8 +98,8 @@ const TestCaseOutput = ({ testCases, language, editorRef }) => {
           }}
         >
           Run All TestCase
-        </Button>
-        <Button>Submit</Button>
+        </Button> */}
+        <Button onClick={()=>handleOnSubmit(submitTestData)}>Submit</Button>
         {waiting && <p>Waiting for code execution...</p>}
       </ButtonPossitionWrapper>
       {testCaseComponent && (

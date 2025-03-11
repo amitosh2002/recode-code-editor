@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import styled from "styled-components";
 import registerImg from "../assets/registration.png";
 import { useNavigate } from "react-router-dom";
-import { createAccount } from "../AuthControl/authService";
+import { onSucessToast } from "./Tostify";
+import { signUpUser } from "../Services/UserServices";
+import { onerrorToast } from "./Tostify";
 const SignUp = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -10,6 +12,7 @@ const SignUp = () => {
     lastName: "",
     email: "",
     password: "",
+    role: '',
     confirmPassword: "",
   });
   const onHandleChange = (e) => {
@@ -20,24 +23,40 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // handleSignup();
-    console.log(user);
+  const handleSignUpCredentails = async () => {
+try {
+  
+    const res = await signUpUser({name: user.firstName+" "+user.lastName,email:user.email,password:user.password,role:user.role});
+    console.log("API Response:", res);
+    if (!res) {
+      onerrorToast("Invalid server response.");
+      return;
+    }
+    const { success, msg } = res.data;
+    if (success === true || success === "true") {
+      onSucessToast(msg);
+      navigate("/login");
+    }else{
+      onerrorToast(msg);
+    }
+
+
+} catch (error) {
+  console.error("Full Error Object:", error);
+
+  const errorMessage = error.response?.data?.msg || error.message || "Something went wrong!";
+  onerrorToast(errorMessage);
+  
+}
   };
 
-  // const handleSignup = async (e) => {
-  //   e.preventDefault();
-  //       try {
-  //           await createAccount(user.email, user.password, user.firstName );
-  //           console.log('Account created successfully!');
-  //           navigate('/login'); // Redirect to login page after successful signup.
-  //           // Optionally, you can log the user in automatically here.
-  //       } catch (err) {
-  //           console.log(err.message );
-  //       }
-  //   };
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSignUpCredentails();
+    // navigate("/login");
+    const { firstName, lastName, email, password, confirmPassword,role } = user;
+    console.log(firstName, lastName,role, email, password, confirmPassword);
+  };
   return (
     <SignUpContainer>
       <div className="img">
@@ -88,6 +107,16 @@ const SignUp = () => {
           />
           <span>Email</span>
         </label>
+         <div className="input-group">
+            <label htmlFor="role">Role</label>
+            <select style={{padding: "8px", borderRadius: "10px", maxWidth: "fit-content",maxHeight: "fit-content",border: "1px solid gray",backgroundColor: "white",cursor: "pointer", }}
+ name="role" id="role" onChange={onHandleChange} value={user.role}>
+              <option value="select">Select login type</option>
+              <option value="admin">Admin</option>
+              <option value="student">Student</option>
+              <option value="dev">Dev</option>
+            </select>
+          </div>
 
         <label>
           <input
@@ -101,6 +130,7 @@ const SignUp = () => {
           />
           <span>Password</span>
         </label>
+        
         <label>
           <input
             className="input"
@@ -130,7 +160,13 @@ const SignUpContainer = styled.div`
   flex-direction: row;
   gap: 250px;
   margin: 50px;
-
+  .input-group{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* margin-top: 15px;
+    margin-bottom: 15px; */
+  }
   img {
     width: 400px;
     height: 300px;

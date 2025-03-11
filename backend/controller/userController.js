@@ -3,48 +3,55 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 //Signup
 
-export const signUp = async(req,res) =>{
+export const signUp = async (req, res) => {
   try {
-    const {name,email,role,password}= req.body;
-    const user = await User.findOne({email});
-    // const user = await User.findOne({email:email});
-    if(user){
-      return res.status(400).json({msg:"User already exists",sucess:false});
+    const { name, email, password, role } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ msg: "User already exists", success: false });
     }
-    const User = new User({name,email,role,password});
-    User.password= await bcrypt.hash(password,10)
-    await User.save();
-    return res.status(200).json({msg:"User created successfully",sucess:true});
-    
+
+    // ✅ Create a new user (rename variable to avoid conflict)
+    const newUser = new User({ name, email, password: await bcrypt.hash(password, 10), role });
+
+    await newUser.save();
+    return res.status(200).json({ msg: "User created successfully", success: true });
+
   } catch (error) {
-    return res.status(404).json({msg:error.message,sucess:false});
-    
+    return res.status(500).json({ msg: "Internal Server Error", success: false, error: error.message });
   }
-}
+};
+
 //login
 
 export const login = async(req,res) =>{
   try {
-    const {email,role,password}= req.body;
-    const user = await User.findOne({email});
-    const errorMsg=`Auth failed email or password is wrong!`
+    const {email,password,role}= req.body;
+    const user = await User.findOne({email:email});
+    console.log("user detail",user,email,password,role);
+    
+    const errorMsg=`Auth faiḷed email or password is wrong!`
+    const hashedPassword = await bcrypt.hash("yourpassword", 10);
+console.log("Hashed Password:", hashedPassword);
+
     // const user = await User.findOne({email:email});
     if(!user){
-      return res.status(400).json({msg:errorMsg,sucess:false});
+      return res.status(400).json({msg:errorMsg,success:false});
     }
-    const isPassEql=await bcrypt.compare(password,user.password);
+    const isPassEql=await bcrypt.compare(password,user?.password);
     if(!isPassEql){
-      return res.status(403).json({msg:errorMsg,sucess:false});
+      return res.status(403).json({msg:errorMsg,success:false});
     }
-    const token=jwt.sign({email:user.email,_id:user._id},
-      process.env.JWT_SECRET,{expiresIn:'24h'}
+    const token=jwt.sign({email:user.email,_id:user._id,role:user.role,password:hashedPassword},
+      process.env.JWT_SECRET,{expiresIn:'2h'}
     )
    
-    return res.status(200).json({msg:"Login successfully",sucess:true,token,role:user.role});
+    return res.status(200).json({msg:"Login successfully",success:true,token,email,name:user.name,id:user._id,role:user.role,error:user.errorMsg,password:hashedPassword});
     
   } catch (error) {
-    return res.status(404).json({msg:error.message,sucess:false});
-    
+    return res.status(404).json({msg:error.msg,success:false});
   }
 }
  
@@ -86,4 +93,63 @@ export const removeUSer = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ msg: error.message });
   }
+};export const saveUserData = async (req, res) => {
+  try {
+    const { id, testDetails } = req.body; // ✅ Expect testDetails
+
+    console.log("Received Data:", req.body); // ✅ Log request body
+
+    if (!id) {
+      return res.status(400).json({ msg: "User ID is required" });
+    }
+
+    if (!testDetails || Object.keys(testDetails).length === 0) {
+      return res.status(400).json({ msg: "Test details are missing" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id.trim(),
+      { $push: { userData: testDetails } }, // ✅ Store testDetails inside userData array
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    console.log("Updated User Data:", updatedUser);
+
+    res.status(200).json({ msg: "Test data saved successfully", updatedUser });
+  } catch (error) {
+    console.error("Error Saving Data:", error);
+    return res.status(500).json({ msg: error.message });
+  }
 };
+
+
+// export const saveUserData = async (req, res) => {
+//   try {
+//     const {  data,id } = req.body;
+//     if (!id) {
+//       return res.status(400).json({ msg: "id is required" });
+//     }
+
+//     // Remove id from data
+//     // const { id: removedId, ...dataWithoutId } = data; // Correctly remove id
+
+//     const updatedUser = await User.findByIdAndUpdate(
+//       id.trim(),
+//       { $push: { userData: { testResult: dataWithoutId } } },
+//       { new: true }
+//     );
+
+//     if (!updatedUser) {
+//       return res.status(404).json({ msg: "no such user exists" });
+//     }
+
+//     res.status(200).json({ updatedUser });
+//     // Removed redundant return statement
+//   } catch (error) {
+//     return res.status(500).json({ msg: error.message });
+//   }
+// };

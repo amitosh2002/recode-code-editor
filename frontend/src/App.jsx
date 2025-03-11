@@ -19,11 +19,16 @@ import Userlist from "./Admin/Userlist";
 import QuestionForm from "./Admin/QuestionForm";
 import AdminGraph from "./Admin/AdminGraph";
 import "../src/App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { handleUserDetails } from "./Redux/Actions/actions";
+import MyAccount from "./component/UserDetail/MyAccount";
 
 // 🌟 Layout for Normal Pages
 const MainLayout = () => (
   <>
-    <NavBar />
+    <NavBar  />
     <Outlet /> {/* This renders the current page content */}
     <Toggle />
     <Footer />
@@ -47,10 +52,12 @@ const router = createBrowserRouter([
       { path: "/question/:id", element: <PracticeCodePanel /> },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <SignUp /> },
+      { path: "/my-account", element: <MyAccount /> },
     ],
   },
   {
     path: "/admin",
+    // element: <ProtectedRoute allowedRoles={["admin"]} />, // Admin pages get their own layout
     element: <AdminPage />, // Admin pages get their own layout
     children: [
       { path: "", element: <AdminPage /> }, // Admin Dashboard
@@ -62,8 +69,21 @@ const router = createBrowserRouter([
   },
 ]);
 
+
+
 const App = () => {
-  return <RouterProvider router={router} />;
+  const dispatch = useDispatch();
+  // ��� Fetch user details from local storage and update Redux state on page load
+   React.useEffect(() => {
+    const storedUser = localStorage.getItem("userDetails");
+    if (storedUser) {
+      dispatch(handleUserDetails(JSON.parse(storedUser))); // ✅ Update Redux state on page load
+    }
+  }, [dispatch]);
+
+  return <><RouterProvider router={router} />
+   <ToastContainer /> </>
+  ;
 };
 
 export default App;

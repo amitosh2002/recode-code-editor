@@ -27,6 +27,9 @@ const PracticeCodePanel = (props) => {
     try {
       const res = await getSingleQuestion(pid);
       setCurrQuestion(res.data.singleQuestion);
+      console.log(currQuestion);
+      
+      
     } catch (error) {
       console.log(error.message);
     }
@@ -93,6 +96,7 @@ const PracticeCodePanel = (props) => {
           language={language}
           editorRef={editorRef}
           testCases={currQuestion.testCases}
+          currQuestion={currQuestion}
         />
       </OutPutWrapper>
     </>

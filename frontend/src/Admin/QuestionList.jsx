@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { deleteQuestion, getQuestionList } from "../Services/QuestionServices";
-import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateTotalQuestionCount } from "../Redux/Slices/AdminSlice";
 const QuestionList = () => {
   const dispatch = useDispatch();
   const [question, setQuestion] = useState([]);
+   const navigate = useNavigate();
+
   const questionList = async () => {
     try {
       const res = await getQuestionList();
@@ -55,22 +56,23 @@ const QuestionList = () => {
   };
 
   return (
+     
     <QuestionContainerAdmin>
-      <div class="container">
-        <div class="header">
+      <div className="container">
+        <div className="header">
           <h1>Question Management</h1>
           <p>Manage all your existing question or add a new question.</p>
           <button
-            class="add-schedule-btn"
+            className="add-schedule-btn"
             onClick={() => {
-              submit();
+            navigate("/admin/questionForm");
             }}
           >
             + Add New Question
           </button>
         </div>
         <div className="table-body">
-          <table class="schedule-table">
+          <table className="schedule-table">
             <thead>
               <tr>
                 <th>Sl No</th>
@@ -103,20 +105,20 @@ const QuestionList = () => {
                 return (
                   <tr>
                     <td>{index + 1}</td>
-                    <td class="employee-info">
+                    <td className="employee-info">
                       <span>{tittle}</span>
                     </td>
                     <td>{questionText}</td>
                     <td>
-                      <span class="status inactive">{difficulty}</span>
+                      <span className="status inactive">{difficulty}</span>
                     </td>
-                    <td class="actions">
+                    <td className="actions">
                       <NavLink to="/admin/questionForm" state={data}>
-                        <button class="edit-btn">✏️</button>
+                        <button className="edit-btn">✏️</button>
                       </NavLink>
 
                       <button
-                        class="delete-btn"
+                        className="delete-btn"
                         onClick={() => {
                           // handleDeleteQuestion(_id);
                           submitDelete({ id: _id });

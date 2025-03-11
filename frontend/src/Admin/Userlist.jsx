@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { deleteUser, getUserList } from "../Services/UserServices";
 import { confirmAlert } from "react-confirm-alert";
+import { Avatar } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 const Userlist = () => {
   const [user, setUser] = useState([]);
 
@@ -52,18 +54,21 @@ const Userlist = () => {
   return (
     <UserListWrapper>
       {user.map((user) => {
-        const { id, userName, userEmail, _id } = user;
+        const {  name, email, _id } = user;
         return (
           <div className="card" key={_id}>
             <div className="img"></div>
+           <Avatar sx={{ bgcolor: deepOrange[500]  , width: 50, height: 50,margin:2}}>
+          {name?.slice(0, 2).toUpperCase()}
+        </Avatar>
             <div className="textBox">
               <div className="textContent">
-                <p className="h1">{userName}</p>
+                <p className="h1">{name}</p>
                 <button className="deleteBtn" onClick={() => submitDelete(_id)}>
                   Delete
                 </button>
               </div>
-              <p className="p">{userEmail}</p>
+              <p className="p">{email}</p>
             </div>
           </div>
         );
@@ -77,8 +82,8 @@ const UserListWrapper = styled.div`
   flex-wrap: wrap;
 
   .card {
-    width: 100%;
-    max-width: 290px;
+    /* width: 100%; */
+    max-width: max-content;
     height: 70px;
     background: #353535;
     border-radius: 20px;
@@ -88,6 +93,7 @@ const UserListWrapper = styled.div`
     backdrop-filter: blur(10px);
     transition: 0.5s ease-in-out;
     margin: 15px;
+    padding: 10px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
   }
 
@@ -97,11 +103,11 @@ const UserListWrapper = styled.div`
   }
 
   .img {
-    width: 50px;
+    /* width: 50px;
     height: 50px;
     margin-left: 10px;
     border-radius: 10px;
-    background: linear-gradient(#d7cfcf, #9198e5);
+    background: linear-gradient(#d7cfcf, #9198e5); */
   }
 
   .card:hover > .img {
@@ -137,6 +143,7 @@ const UserListWrapper = styled.div`
     color: white;
     border: none;
     padding: 5px 10px;
+    margin: 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 12px;

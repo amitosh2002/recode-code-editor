@@ -1,0 +1,4 @@
+export const SET_USER_DETAILS = "SET_USER_DETAILS";
+export const SET_USER_LIST = "SET_USER_LIST";
+export const SET_USER_DATA = "SET_USER_DATA";
+export const ENABLE_EDIT_FORM = "SET_EDIT_FORM";

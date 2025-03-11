@@ -1,9 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 import logo from "../assets/recode_logo-removebg-preview.png";
 import { NavLink } from "react-router-dom";
-const NavBar = ({ user, handleLogout}) => {
-  
+import { useSelector } from "react-redux";
+import DropDownNav from "./DropDownNav";
+const NavBar = () => {
+  const userDetails = useSelector((state) => state.userReducer.userDetails) ||``  ;
+  const sucessLogin = useSelector((state) => state.userReducer.SUCESS_FETCH_USER_DETAIL);
   return (
     <Wrapper>
       <nav>
@@ -30,32 +32,36 @@ const NavBar = ({ user, handleLogout}) => {
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
+            {!sucessLogin && 
           <li>
-            <NavLink to="/login">Login</NavLink>
+              <NavLink to="/login">Login</NavLink>
           </li>
+            }
           <li>
-            <NavLink to="/admin">Admin</NavLink>
+            {userDetails.role === "admin" && (
+
+              <NavLink to="/admin">Admin</NavLink>
+            ) }
           </li>
-          {/* {user ? (
-        <>
-          <span>Welcome, {user.name}!</span>
-          <button onClick={handleLogout}>Logout</button>
-          {user.labels?.includes("admin") && <NavLink to="/admin">Admin</NavLink>}
-        </>
-      ) : (
-        <>
-          <li>
-            <NavLink to="/login">Login</NavLink>
-          </li>
-          <NavLink to="/signup">Sign Up</NavLink>
-        </>
-      )} */}
+        </ul>
+        <ul>
+
+         <li >
+    { sucessLogin && <DropDownNav userDetails={userDetails}/>}
+    </li>
         </ul>
       </nav>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #18191a;
+}
   a {
     text-decoration: none;
     color: white;
@@ -82,11 +88,6 @@ const Wrapper = styled.div`
     justify-items: center;
     align-items: center;
   }
-  li:hover {
-    transform: scale(1.2);
-    background: #6868ef;
-    padding: 5px;
-    border-radius: 8px;
-  }
+  
 `;
 export default NavBar;
