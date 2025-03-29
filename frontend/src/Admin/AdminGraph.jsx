@@ -30,7 +30,7 @@ const AdminGraph = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:6001/api/allQuestion"
+          "https://app-m1-recode-server.onrender.com/api/allQuestion"
         );
         const data = response.data?.allQuestion;
 

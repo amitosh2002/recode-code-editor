@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:  "http://localhost:6001/api/auth",
+  baseURL:  "https://app-m1-recode-server.onrender.com/api/auth",
   headers: {
     "Content-Type": "application/json",
   },

@@ -60,7 +60,7 @@ const QuestionForm = () => {
         alert("Question updated successfully!");
       } else {
         const response = await axios.post(
-          "http://localhost:6001/api/addQuestion",
+          "https://app-m1-recode-server.onrender.com/api/addQuestion",
           question,
           {
             headers: { "Content-Type": "application/json" },
@@ -134,9 +134,9 @@ const QuestionForm = () => {
 
         <div className="test-case">
           {question.testCases.map((testCase, index) => (
-            <div class="contact-form" key={index}>
+            <div className="contact-form" key={index}>
               <h3>Test Case {index + 1}</h3>
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   type="text"
                   placeholder="Test case input"
