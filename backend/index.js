@@ -7,11 +7,16 @@ import cors from "cors";
 import route from "./Router/questionRoutes.js";
 import userRoute from "./Router/userRoutes.js";
 import dotenv from "dotenv";
+import TestResultRoute from "./Router/testResultRoutes.js";
+
+import TestRoute from "./Router/testRoute.js";
 app.use(bodyParser.json());
-app.use(cors({
-  origin: "http://localhost:5173", // Allow requests from frontend
-  credentials: true, // Allow cookies and authorization headers
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow requests from frontend
+    credentials: true, // Allow cookies and authorization headers
+  })
+);
 dotenv.config();
 const PORT = process.env.PORT || 6001;
 const URI = process.env.MONGO_URI;
@@ -29,3 +34,5 @@ mongoose
 
 app.use("/api", route);
 app.use("/api/auth", userRoute);
+app.use("/api/test", TestRoute);
+app.use("/api/result", TestResultRoute);
