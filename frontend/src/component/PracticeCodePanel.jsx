@@ -16,13 +16,7 @@ const PracticeCodePanel = (props) => {
   // const QuestionProblem = useSelector((state) => state.mainComponent.problems);
   const params = useParams();
   const pid = params.id;
-  const question = useSelector((state) =>
-    state.mainComponent.problems.find((q) => q._id === pid)
-  );
-
   const [currQuestion, setCurrQuestion] = useState([]);
-  // console.log(currQuestion._id);
-
   const handleSingleQuestion = async (pid) => {
     try {
       const res = await getSingleQuestion(pid);
@@ -37,32 +31,14 @@ const PracticeCodePanel = (props) => {
   useEffect(() => {
     handleSingleQuestion(pid);
   }, [pid]);
-  // console.log(currQuestion, "hfhg");
-
-  // const handleSingleQuestion = async (pid) => {
-  //   try {
-  //     const res = await getSingleQuestion(pid);
-  //     // dispatch(updateQuestionProblems(res.data.SingleQuestion));
-  //     console.log(res.data);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-  // useEffect((pid) => {
-  //   handleSingleQuestion(pid);
-  // }, []);
+ 
   const language = useSelector((state) => state.editor.currentLanguage);
   console.log(language);
   const editorRef = useRef(null);
-  // const handleOutput = (language, editorRef) => {
-  //   runCode(language, editorRef);
-  //   console.log(btnClicked);
-  // };
+
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
   };
-  // ----getting questionDetails from redux store-----------------
-  // const { description, questionText, tittle, testCases } = question;
 
   return (
     <>

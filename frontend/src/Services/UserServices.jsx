@@ -19,13 +19,13 @@ export const singleUser = (id) => {
   return API.get(`/singleuser/${id}`);
 };
 
-export const loginUser = (loginCredentials)=>{
-    return API.post("/login",loginCredentials);
-}
-export const signUpUser = (SignUpCredentials)=>{
-    return API.post("/register",SignUpCredentials);
-}
+export const loginUser = (loginCredentials) => {
+  return API.post("/login", loginCredentials);
+};
+export const signUpUser = (SignUpCredentials) => {
+  return API.post("/register", SignUpCredentials);
+};
 
 export const submitTest = (submitTestData) => {
-  return API.put("/saveRecords",submitTestData);
+  return API.put("/saveRecords", submitTestData);
 };

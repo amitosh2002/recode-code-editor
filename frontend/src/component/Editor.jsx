@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import styled from "styled-components";
 import { BOILER_PLATE, LANGUAGE_VERSIONS } from "../EditorComponent/Language";
 import Output from "./Output";
+import { useRef, useState } from "react";
 const EditorBody = () => {
   const editorRef = useRef(null);
 

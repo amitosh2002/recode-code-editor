@@ -4,8 +4,11 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DropDownNav from "./DropDownNav";
 const NavBar = () => {
-  const userDetails = useSelector((state) => state.userReducer.userDetails) ||``  ;
-  const sucessLogin = useSelector((state) => state.userReducer.SUCESS_FETCH_USER_DETAIL);
+  const userDetails =
+    useSelector((state) => state.userReducer.userDetails) || ``;
+  const sucessLogin = useSelector(
+    (state) => state.userReducer.SUCESS_FETCH_USER_DETAIL
+  );
   return (
     <Wrapper>
       <nav>
@@ -32,36 +35,37 @@ const NavBar = () => {
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
-            {!sucessLogin && 
-          <li>
+          {!sucessLogin && (
+            <li>
               <NavLink to="/login">Login</NavLink>
-          </li>
-            }
+            </li>
+          )}
           <li>
             {userDetails.role === "admin" && (
-
               <NavLink to="/admin">Admin</NavLink>
-            ) }
+            )}
+          </li>
+          <li>
+            {userDetails.role === "admin" && (
+              <NavLink to="/exam">Test Page</NavLink>
+            )}
           </li>
         </ul>
         <ul>
-
-         <li >
-    { sucessLogin && <DropDownNav userDetails={userDetails}/>}
-    </li>
+          <li>{sucessLogin && <DropDownNav userDetails={userDetails} />}</li>
         </ul>
       </nav>
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
-nav{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  background-color: #18191a;
-}
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: #18191a;
+  }
   a {
     text-decoration: none;
     color: white;
@@ -88,6 +92,5 @@ nav{
     justify-items: center;
     align-items: center;
   }
-  
 `;
 export default NavBar;

@@ -56,6 +56,14 @@ const AdminRightPanel = () => {
             User List
           </Button>
         </NavLink>
+        <NavLink to="test_validation">
+          <Button
+            // onClick={() => handlePageChange("Userlist")}
+            aria-label="View User List"
+          >
+            Test Control
+          </Button>
+        </NavLink>
       </div>
     </RightPanel>
   );

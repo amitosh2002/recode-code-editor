@@ -13,7 +13,7 @@ import TestRoute from "./Router/testRoute.js";
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: "https://recode-code-editor.onrender.com", // Allow requests from frontend
+    origin: "http://localhost:5173", // Allow requests from frontend
     credentials: true, // Allow cookies and authorization headers
   })
 );

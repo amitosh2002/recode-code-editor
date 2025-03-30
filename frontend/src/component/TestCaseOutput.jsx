@@ -28,6 +28,7 @@ console.log(userDetails ,"ssnj");
     passed: "",
     failed: "",
     questionId: currQuestion._id || "",
+    programming_language:language,
     questionDetails: currQuestion.description || "",
     questionAnswer: testCases || "",
     answerStatus: "",
@@ -82,10 +83,12 @@ const handleOnSubmit = async () => {
       setWaiting(false); // Stop waiting
     }
   };
+  
+
   return (
     <div>
       <ButtonPossitionWrapper>
-        {/* <Button
+        <Button
           onClick={() => {
             runCode(), setOutputComponent(true), setTestCaseComponent(false);
           }}
@@ -98,7 +101,7 @@ const handleOnSubmit = async () => {
           }}
         >
           Run All TestCase
-        </Button> */}
+        </Button>
         <Button onClick={()=>handleOnSubmit(submitTestData)}>Submit</Button>
         {waiting && <p>Waiting for code execution...</p>}
       </ButtonPossitionWrapper>

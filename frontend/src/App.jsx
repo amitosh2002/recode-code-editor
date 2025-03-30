@@ -24,11 +24,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { handleUserDetails } from "./Redux/Actions/actions";
 import MyAccount from "./component/UserDetail/MyAccount";
+import TestOrganizeHome from "./Admin/TestOrganize/TestOrganizeHome";
+import TestPage from "./component/TestComponentV1/TestPage";
+import ExamControl from "./component/TestComponentV1/ExamControl";
 
 // 🌟 Layout for Normal Pages
 const MainLayout = () => (
   <>
-    <NavBar  />
+    <NavBar />
     <Outlet /> {/* This renders the current page content */}
     <Toggle />
     <Footer />
@@ -53,6 +56,8 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <SignUp /> },
       { path: "/my-account", element: <MyAccount /> },
+      { path: "/exam", element: <ExamControl /> },
+      { path: "/exam/:subjectCode", element: <TestPage /> },
     ],
   },
   {
@@ -65,25 +70,27 @@ const router = createBrowserRouter([
       { index: true, element: <AdminGraph /> }, // Default admin route
       { path: "questionForm", element: <QuestionForm /> },
       { path: "userlist", element: <Userlist /> },
+      { path: "test_validation", element: <TestOrganizeHome /> },
     ],
   },
 ]);
 
-
-
 const App = () => {
   const dispatch = useDispatch();
   // ��� Fetch user details from local storage and update Redux state on page load
-   React.useEffect(() => {
+  React.useEffect(() => {
     const storedUser = localStorage.getItem("userDetails");
     if (storedUser) {
       dispatch(handleUserDetails(JSON.parse(storedUser))); // ✅ Update Redux state on page load
     }
   }, [dispatch]);
 
-  return <><RouterProvider router={router} />
-   <ToastContainer /> </>
-  ;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />{" "}
+    </>
+  );
 };
 
 export default App;

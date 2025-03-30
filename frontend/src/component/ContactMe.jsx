@@ -1,6 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 import contactImg from "../assets/contactForm.png";
+import { onSucessToast } from "./Tostify";
 const ContactMe = () => {
   return (
     <ContactForm>
@@ -8,48 +8,49 @@ const ContactMe = () => {
         <img src={contactImg} alt="" />
       </div>
       <form
-        class="colorful-form"
+        className="colorful-form"
         action="https://formspree.io/f/mgveanpz"
         method="POST"
+        onSubmit={()=>onSucessToast("Message Sent Successfully ,We will contact you soon")}
       >
-        <div class="form-group">
-          <label class="form-label" for="name">
+        <div className="form-group">
+          <label className="form-label" htmlFor="name">
             Name:
           </label>
           <input
             // required=""
             placeholder="Enter your name"
-            class="form-input"
+            className="form-input"
             type="text"
             required
           />
         </div>
-        <div class="form-group">
-          <label class="form-label" for="email">
+        <div className="form-group">
+          <label className="form-label" htmlFor="email">
             Email:
           </label>
           <input
             required
             placeholder="Enter your email"
-            class="form-input"
+            className="form-input"
             name="email"
             id="email"
             type="email"
           />
         </div>
-        <div class="form-group">
-          <label class="form-label" for="message">
+        <div className="form-group">
+          <label className="form-label" htmlFor="message">
             Message:
           </label>
           <textarea
             required
             placeholder="Enter your message"
-            class="form-input"
+            className="form-input"
             name="message"
             id="message"
           ></textarea>
         </div>
-        <button class="form-button" type="submit">
+        <button className="form-button" type="submit">
           Submit
         </button>
       </form>

@@ -85,7 +85,7 @@ const UserListWrapper = styled.div`
     /* width: 100%; */
     max-width: max-content;
     height: 70px;
-    background: #353535;
+    background: #f9eeee;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -131,11 +131,13 @@ const UserListWrapper = styled.div`
   .h1 {
     font-size: 16px;
     font-weight: bold;
+    color: black;
   }
 
   .p {
     font-size: 12px;
     font-weight: lighter;
+    color: black;
   }
 
   .deleteBtn {
