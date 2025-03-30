@@ -1,6 +1,6 @@
 import Test from "../model/testQrganizeModel.js";
 
-export const getAllTest = async (req, res, next) => {
+export const getAllTest = async (req, res) => {
   try {
     const allTest = await Test.find();
     if (!allTest) {
@@ -12,7 +12,7 @@ export const getAllTest = async (req, res, next) => {
   }
 };
 
-export const deleteTest = async (req, res, next) => {
+export const deleteTest = async (req, res) => {
   try {
     const id = req.params.id;
     const test = await Test.findByIdAndDelete(id);
@@ -23,12 +23,25 @@ export const deleteTest = async (req, res, next) => {
   } catch (error) {}
 };
 
-export const createTest = async (req, res, next) => {
+export const createTest = async (req, res) => {
   try {
     const newTest = new Test(req.body);
     await newTest.save();
     res.status(201).json({ newTest });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const getTest = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const test = await Test.findById(id);
+    if (!test) {
+      return res.status(404).json({ message: "No test found" });
+    }
+    return res.status(200).json({ test });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

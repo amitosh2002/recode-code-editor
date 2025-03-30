@@ -5,11 +5,13 @@ import {
   getAllTest,
   deleteTest,
   createTest,
+  getTest,
 } from "../controller/testController.js";
 import { ensureAuthenticated } from "../MiddleWare/Auth.js";
 
-TestRoute.get("/allTest", ensureAuthenticated, getAllTest);
-TestRoute.delete("/delete/:id", ensureAuthenticated, deleteTest);
-TestRoute.post("/create", ensureAuthenticated, createTest);
+TestRoute.get("/allTest", getAllTest);
+TestRoute.delete("/delete/:id", deleteTest);
+TestRoute.post("/create", createTest);
+TestRoute.get("/singletest/:id", getTest);
 
 export default TestRoute;
