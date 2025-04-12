@@ -11,10 +11,21 @@ import TestResultRoute from "./Router/testResultRoutes.js";
 
 import TestRoute from "./Router/testRoute.js";
 app.use(bodyParser.json());
+
+const allowedOrigins = [
+  "http://localhost:5173",                  // Local dev
+  "https://recode-code-editor.onrender.com" // Production
+];
 app.use(
-  cors({
-    origin: "https://recode-code-editor.onrender.com", // Allow requests from frontend
-    credentials: true, // Allow cookies and authorization headers
+  cors(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
   })
 );
 dotenv.config();
