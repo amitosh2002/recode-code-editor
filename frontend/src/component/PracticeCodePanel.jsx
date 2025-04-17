@@ -5,12 +5,12 @@ import PracticeCodeQuestionView from "./PracticeCodeQuestionView";
 import { useDispatch, useSelector } from "react-redux";
 import LanguageButton from "./LanguageButton";
 import { useRef } from "react";
-import runCode from "./TestCaseOutput";
+// import runCode from "./TestCaseOutput";
 import { useParams } from "react-router-dom";
 import TestCaseOutput from "./TestCaseOutput";
 import PageNavigation from "./PageNavigation";
-import { getQuestionList } from "../Services/QuestionServices";
-import Stopwatch from "./Stopwatch";
+// import { getQuestionList } from "../Services/QuestionServices";
+// import Stopwatch from "./Stopwatch";
 import { getSingleQuestion } from "../Services/QuestionServices";
 const PracticeCodePanel = (props) => {
   // const QuestionProblem = useSelector((state) => state.mainComponent.problems);

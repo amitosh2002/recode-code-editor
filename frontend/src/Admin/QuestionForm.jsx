@@ -60,7 +60,7 @@ const QuestionForm = () => {
         alert("Question updated successfully!");
       } else {
         const response = await axios.post(
-          "https://app-m1-recode-server.onrender.com/api/addQuestion",
+          "http://localhost:6001/api/addQuestion",
           question,
           {
             headers: { "Content-Type": "application/json" },

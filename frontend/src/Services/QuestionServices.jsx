@@ -1,6 +1,7 @@
 import axios from "axios";
 const API = axios.create({
-  baseURL: "https://app-m1-recode-server.onrender.com/api",
+  // baseURL: "http://localhost:6001/api",
+  baseURL: `${import.meta.env.VITE_REACT_APP_API_KEY}/api`,
 });
 
 export const getQuestionList = () => {

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleTest } from "../../Redux/Actions/testActions";
+import {  fetchSingleTest, handleTestResultCheker, submitTestResult, testCompilerRun } from "../../Redux/Actions/testActions";
 import { onerrorToast } from "../Tostify";
 import { Editor } from "@monaco-editor/react";
 import LanguageButton from "../LanguageButton";
@@ -15,6 +15,16 @@ import {
   Box,
 } from "@mui/material";
 import "./CodingExamPage.scss";
+import {
+  Paper,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import { CgArrowDown,  CgCornerDoubleDownRight } from "react-icons/cg";
+import { CLOSE_TEST_CASES_AREA } from "../../Redux/Constants/testConstant";
 
 const TestPage = () => {
   const location = useLocation();
@@ -22,12 +32,15 @@ const TestPage = () => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const [editorValues, setEditorValues] = useState({});
+  // const [correctTestCases, setCorrectTestCases] = useState(0);
 
   const editorRef = useRef(null);
-
+  const{checkTestCases} = useSelector((state) => state.testReducer);
+  console.log(checkTestCases,"checkTestCases")
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
   };
+//
 
   useEffect(() => {
     if (testCredential?.testId) {
@@ -35,8 +48,9 @@ const TestPage = () => {
     }
   }, [dispatch, testCredential]);
 
-  const currentTest = useSelector((state) => state.testReducer.singleExam);
+  const currentTest = useSelector((state) => state.testReducer?.singleExam);
   const language = useSelector((state) => state.editor.currentLanguage);
+  const {compilerResult,testReport,testCaseResult,outputPopUp} = useSelector((state) => state.testReducer);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -48,6 +62,55 @@ const TestPage = () => {
       [activeTab]: value,
     }));
   };
+
+  const handleCompilerRun=()=>{
+
+
+    const testCasesData = currentTest?.questions[activeTab]?.testCases;
+    const passingScore = currentTest?.passingScore;
+
+    
+    const code = editorRef.current.getValue();  // Get the code from the editor
+    dispatch(testCompilerRun(code));
+     const checkTestActionData = {
+      testCases: testCasesData,
+      passingScore: passingScore,
+    outputCode:compilerResult
+  }
+    dispatch(handleTestResultCheker(checkTestActionData))
+    // compilerResult
+    dispatch({type:CLOSE_TEST_CASES_AREA})
+  }
+  const {userDetails} = useSelector((state) => state.userReducer);
+  
+
+
+  const answers = currentTest?.questions?.map((question, index) => ({
+  questionId: question._id,
+  // questionTitle: question.questionTitle,
+  // questionDescription: question.questionDescription,
+  writtenCode: editorValues[index] || "", // fallback in case no code entered
+  testCases: question?.testCases?.map((testCase) => ({
+    input: testCase.input,
+    output: testCase.output,
+  })),
+correctAnswers:testReport?.correctTestCases||0,
+incorrectTestCases:testReport?.incorrectTestCases||0,
+percentageScore:testReport?.totalPercentage||0,
+score:testReport?.status||""  // isCorrect: question.testCases.every((testCase) => testCase.passed === true) || "",
+
+
+}));
+  console.log(answers,"answers from test page")
+
+
+  const handlesubmitTest=()=>{
+    // const code = currentTest?.questions[activeTab]?.editorRef.current.getValue();  // Get the code from the editor
+    const testData = { currentTest:currentTest,userSubmit:answers, userDetails: userDetails };
+
+    dispatch(submitTestResult(testData));
+    console.log(testData,"data from test page")
+  }
 
   return (
     <div className="coding_exam">
@@ -156,13 +219,60 @@ const TestPage = () => {
                       onChange={handleEditorChange}
                       onMount={handleEditorDidMount}
                     />
+                     <ButtonGroup variant="outlined" aria-label="Loading button group">
+                            <Button onClick={handleCompilerRun}>Submit</Button>
+                            <Button onClick={handlesubmitTest}>Fetch data</Button>
+                            <Button loading loadingPosition="start" startIcon={CgCornerDoubleDownRight}>
+                              Save
+                            </Button>
+                          </ButtonGroup>
                   </Box>
                 </>
               )}
-            </Box>
+              {
+                outputPopUp && (
+                  <Paper elevation={4} className="bottom-test-panel">
+      <Box className="panel-section">
+        <Typography variant="h6">Test Cases</Typography>
+        <List>
+          {testCaseResult?.testCases?.map((test, index) => (
+            <ListItem
+              key={index}
+              className={`test-case ${test.passed ? "passed" : "failed"}`}
+            >
+              <ListItemText
+                primary={`Test ${index + 1}` }
+                secondary={test.passed ? "✅ Passed" : "❌ Failed"}
+              />
+              <ListItemText
+                primary={test.input }
+                secondary={test.output}
+              />
+            </ListItem > 
           ))}
+        </List>
+      </Box>
+
+      <Divider orientation="vertical" flexItem />
+      <CgArrowDown size={32} style={{ cursor:"pointer"}}onClick={()=>dispatch({type:CLOSE_TEST_CASES_AREA})}/>
+
+      <Box className="panel-section output-panel">
+        <Typography variant="h6">Output</Typography>
+        <Box className="output-box">
+          <pre>{compilerResult.run.output}</pre>
+        </Box>
+      </Box>
+    </Paper>
+                )
+              }
+            </Box>
+            
+          ))}
+
         </div>
       </div>
+      {/* output panel */}
+      
     </div>
   );
 };

@@ -70,3 +70,57 @@
         }
     }
 }
+
+
+.bottom-test-panel {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    background-color: #fff;
+    z-index: 9999;
+    border-top: 1px solid #ccc;
+
+    .panel-section {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+
+        h6 {
+            margin-bottom: 0.5rem;
+        }
+
+        .test-case {
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+
+            &.passed {
+                background-color: #e8f5e9;
+                color: #2e7d32;
+            }
+
+            &.failed {
+                background-color: #ffebee;
+                color: #c62828;
+            }
+        }
+    }
+
+    .output-panel {
+        background-color: #f4f4f4;
+
+        .output-box {
+            background: #212121;
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import { updateQuestionProblems } from "../Redux/Slices/AdminSlice";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import CustomLoader from "./Platform/Loader/customLoader";
 const PracticeCode = () => {
   const dispatch = useDispatch();
   const [allQn, setAllQn] = useState([]);
@@ -14,6 +15,7 @@ const PracticeCode = () => {
       const res = await getQuestionList();
       setAllQn(res.data.allQuestion); // update state with the fetched data
       // console.log(res.data.allQuestion);
+
     } catch (error) {
       console.log(error.message);
     }
@@ -22,6 +24,12 @@ const PracticeCode = () => {
   useEffect(() => {
     questionList();
   }, []);
+  if (allQn.length === 0) {
+    return (
+     <CustomLoader/>
+    );
+    
+  }
   return (
     <div>
       <QuestionContainer>

@@ -103,7 +103,7 @@ const QuestionList = () => {
                   description,
                 };
                 return (
-                  <tr>
+                  <tr key={index}>
                     <td>{index + 1}</td>
                     <td className="employee-info">
                       <span>{tittle}</span>

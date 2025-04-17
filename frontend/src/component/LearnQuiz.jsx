@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import quiz from "../assets/Quiz.png";
+import CustomLoader from "./Platform/Loader/customLoader";
 // Register components for Chart.js
 ChartJS.register(
   CategoryScale,
@@ -199,9 +200,10 @@ const LearnQuiz = () => {
   // If questions are still loading, display loading message
   if (quizQuestions.length === 0) {
     return (
-      <Loader>
-        <div className="loader"></div>
-      </Loader>
+      // <Loader>
+      //   <div className="loader"></div>
+      // </Loader>
+      <CustomLoader />
     );
   }
 

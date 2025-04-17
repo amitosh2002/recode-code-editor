@@ -1,4 +1,4 @@
-import { SET_USER_DATA } from "../Constants/constants";
+import { FETCH_sINGLE_USER, SET_USER_DATA } from "../Constants/constants";
 import { SET_USER_DETAILS } from "../Constants/constants";
 import { SET_USER_LIST } from "../Constants/constants";
 import { createReducer } from "@reduxjs/toolkit";
@@ -9,10 +9,13 @@ const initialState = {
     userData: [],
     userDetails: {},
     userList: [],   
+    fetchAllUser: [],
+    singleUser: [],
     FETCH_USER_DATA:false,
     SUCESS_FETCH_USER_DETAIL:false,
     FETCH_USER_USERLIST:false,
     IS_EDIT_FORM_ENABLED:false,
+
 }
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -29,5 +32,8 @@ export const userReducer = createReducer(initialState, (builder) => {
     .addCase(ENABLE_EDIT_FORM,(state,action)=>{
         state.IS_EDIT_FORM_ENABLED=action.payload;
 
+    })
+    .addCase(FETCH_sINGLE_USER, (state, action) => {
+        state.singleUser = action.payload; // Update FETCH_USER_DATA state with new data
     })
 })

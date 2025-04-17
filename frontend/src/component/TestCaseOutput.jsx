@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { ececutionCode } from "../Services/Api";
 import styled from "styled-components";
-import { VscPassFilled } from "react-icons/vsc";
-import { ImCross } from "react-icons/im";
+// import { VscPassFilled } from "react-icons/vsc";
+// import { ImCross } from "react-icons/im";
 import TestCaseCard from "./TestCaseCard";
 import PracticeCodeTestArea from "./PracticeCodeTestArea";
-import { handleSubmitAnswers } from "../Redux/Actions/actions";
+// import { handleSubmitAnswers } from "../Redux/Actions/actions";
 import { onSucessToast,onerrorToast } from "./Tostify";
 import { submitTest } from "../Services/UserServices";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const TestCaseOutput = ({ testCases, language, editorRef ,currQuestion}) => {
   // console.log("testCaseComponent", currQuestion._id );
   const userDetails = useSelector((state)=>state.userReducer.userDetails)
 
-console.log(userDetails ,"ssnj");
+// console.log(userDetails ,"ssnj");
 
   const submitTestData ={
     id:userDetails.id,
