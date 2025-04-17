@@ -12,7 +12,7 @@ export const fetchAllTests = () => async (dispatch) => {
   //   }
 
   try {
-    const response = await axios.get(`http://localhost:6001/api/test/allTest`, {
+    const response = await axios.get(`https://app-m1-recode-server.onrender.com/api/test/allTest`, {
       headers: {
         "Content-Type": "application/json",
         // Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ export const fetchAllTests = () => async (dispatch) => {
 export const fetchSingleTest = (id) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:6001/api/test/singletest/${id}`,
+      `https://app-m1-recode-server.onrender.com/api/test/singletest/${id}`,
       {
         headers: {
           "Content-Type": "application/json",
