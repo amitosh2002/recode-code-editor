@@ -7,7 +7,7 @@ import {
 const TestResultRoute = express.Router();
 import { ensureAuthenticated } from "../MiddleWare/Auth.js";
 
-TestResultRoute.get("/result/all", ensureAuthenticated, getALlResult);
-TestResultRoute.get("/result/:id", ensureAuthenticated, getSingleResult);
-TestResultRoute.post("/result/submit", ensureAuthenticated, submitExam);
+TestResultRoute.get("/all",  getALlResult);
+TestResultRoute.get("/:id", getSingleResult);
+TestResultRoute.post("/submit", submitExam);
 export default TestResultRoute;

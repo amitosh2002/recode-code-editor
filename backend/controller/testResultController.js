@@ -26,15 +26,45 @@ export const getSingleResult = async (req, res, next) => {
   }
 };
 
-export const submitExam = async (req, res, next) => {
+// export const submitExam = async (req, res) => {
+  
+//   try {
+//     const testResult = new TestResult(req.body);
+//     if (!testResult) {
+//       res.status(404).json({ msg: "Your test is not submited" });
+//     }
+//     await testResult.save();
+//     res.status(200).json({ msg: "Test submitted successfully", testResult });
+//   } catch (error) {
+//     res.status(500).json({ msg: error.message });
+//   }
+// };
+// import TestResult from "../models/TestResult.js"; // make sure this path is correct
+
+export const submitExam = async (req, res) => {
   try {
-    const testResult = new TestResult(req.body);
-    if (!testResult) {
-      res.status(404).json({ msg: "Your test is not submited" });
+    const { userId, testId, examDetails, responses } = req.body;
+
+    // Basic validation
+    if (!userId || !testId || !examDetails || !responses || responses.length === 0) {
+      return res.status(400).json({ msg: "Missing required fields" });
     }
+
+    const testResult = new TestResult({
+      userId,
+      testId,
+      examDetails: examDetails, // Note: your schema uses 'examDettails' (might want to fix the spelling)
+      responses,
+    });
+
     await testResult.save();
-    res.status(200).json({ msg: "Test submitted successfully", testResult });
+
+    res.status(200).json({
+      msg: "✅ Test submitted successfully",
+      testResult,
+    });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    console.error("❌ Error in submitExam:", error.message);
+    res.status(500).json({ msg: "Server Error", error: error.message });
   }
 };
