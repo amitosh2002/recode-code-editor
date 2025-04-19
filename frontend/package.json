@@ -32,6 +32,7 @@
     "react-speech-recognition": "^3.10.0",
     "react-toastify": "^11.0.5",
     "react-tooltip": "^5.28.0",
+    "recharts": "^2.15.2",
     "styled-components": "^6.1.13",
     "tesseract.js": "^4.1.1"
   },

@@ -60,7 +60,7 @@ const QuestionForm = () => {
         alert("Question updated successfully!");
       } else {
         const response = await axios.post(
-          "http://localhost:6001/api/addQuestion",
+         `${import.meta.env.VITE_REACT_APP_API_KEY}/api/question/add`,
           question,
           {
             headers: { "Content-Type": "application/json" },
@@ -184,9 +184,13 @@ const FormWrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa;
+   */
+  background-color: #102c54;
+color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 1015px;
+  color: #0b0000;
 
   /* ------------------------test case---------------- */
   .contact-form {
@@ -227,8 +231,9 @@ const FormWrapper = styled.div`
 
   .submit-button {
     padding: 10px 20px;
-    background-color: #346beb;
-    color: #fff;
+    background-color: rgb(52, 107, 235);
+    /* color: #100e0e; */
+    color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -247,6 +252,7 @@ const FormWrapper = styled.div`
     font-size: xx-large;
     margin-bottom: 30px;
     font-family: "Courier New", Courier, monospace;
+    color: #efeff1;
   }
 
   .input-container {
@@ -260,7 +266,8 @@ const FormWrapper = styled.div`
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
-    background-color: #fff;
+    /* background-color: #141963; */
+    color: white;
   }
   .input-container label {
     margin: 5px;

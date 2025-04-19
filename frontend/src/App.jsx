@@ -17,7 +17,7 @@ import PracticeCodePanel from "./component/PracticeCodePanel";
 import QuestionList from "./Admin/QuestionList";
 import Userlist from "./Admin/Userlist";
 import QuestionForm from "./Admin/QuestionForm";
-import AdminGraph from "./Admin/AdminGraph";
+// import AdminGraph from "./Admin/AdminGraph";
 import "../src/App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,6 +27,9 @@ import MyAccount from "./component/UserDetail/MyAccount";
 import TestOrganizeHome from "./Admin/TestOrganize/TestOrganizeHome";
 import TestPage from "./component/TestComponentV1/TestPage";
 import ExamControl from "./component/TestComponentV1/ExamControl";
+// import EmployeeChart from "./Admin/AdminGraph";
+import DBStatsGraph from "./Admin/AdminGraph";
+// import Dashboard from "./Admin/AdminDashBoard";
 
 // 🌟 Layout for Normal Pages
 const MainLayout = () => (
@@ -67,7 +70,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <AdminPage /> }, // Admin Dashboard
       { path: "questionList", element: <QuestionList /> },
-      { index: true, element: <AdminGraph /> }, // Default admin route
+      { index: true, element: <DBStatsGraph /> }, // Default admin route
       { path: "questionForm", element: <QuestionForm /> },
       { path: "userlist", element: <Userlist /> },
       { path: "test_validation", element: <TestOrganizeHome /> },

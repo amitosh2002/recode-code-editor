@@ -6,10 +6,11 @@ import Button from '@mui/material/Button'
 import styled from 'styled-components'
 import { handleLogOut } from '../Redux/Actions/actions'
 import { useDispatch } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 const DropDownNav = ({userDetails}) => {
   const [dropDown, setDropDown] = React.useState(false);
   const dispatch =useDispatch();
+  const navigate = useNavigate();
   if (!userDetails){
     setDropDown(false);
     return null;
@@ -17,6 +18,7 @@ const DropDownNav = ({userDetails}) => {
   const logOutHandler = () => { 
     dispatch(handleLogOut());
     setDropDown(false);
+    navigate("/login"); // Redirect to login page after logout
   }
   return (
     <DropDownWrapper>

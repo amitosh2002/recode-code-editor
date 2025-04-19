@@ -1,0 +1,134 @@
+.dashboard-container {
+    /* Your existing dashboard container styles */
+
+    // align-items: center;
+    // padding: 2rem;
+}
+
+.top-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .card {
+        flex: 1 1 200px;
+        background: #111c2e;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.1rem;
+        color: white;
+
+        span {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #87cefa;
+        }
+    }
+}
+
+.middle-section {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: flex-start;
+    /* Align items to the top */
+}
+
+.activity {
+    flex: 1;
+    background: #111c2e;
+    padding: 1.5rem;
+    border-radius: 12px;
+    color: white;
+    /* Add your activity styles */
+}
+
+.quick-access {
+    flex: 1;
+    background: #111c2e;
+    padding: 1.5rem;
+    border-radius: 12px;
+
+    .text-box {
+        background-color: #0f5cd7 !important;
+        // width: 100%;
+        width: 160px;
+        padding: 0.5rem 1rem !important;
+
+        /* Adjust padding for smaller text boxes */
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s;
+        color: white;
+        width: 150px !important;
+
+        /* Make the box width fit the content */
+    }
+}
+
+.quick-access .grid {
+    display: flex;
+    flex-direction: row;
+    /* Arrange text boxes and graph wrapper in a row */
+    gap: 1rem;
+    width: 100%;
+    max-width: 1080px;
+    align-items: flex-start;
+    // background-color: aqua;
+    /* Align items to the top */
+}
+
+.quick-access .grid .box-container {
+    display: flex;
+    flex-direction: column;
+    /* Stack the text boxes vertically */
+    gap: 1rem;
+}
+
+.quick-access .grid .box {
+    background: #0f1b2d;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s;
+    color: white;
+    width: fit-content;
+    min-width: auto;
+    flex-grow: 0;
+}
+
+.quick-access .grid .graph-box-wrapper {
+    flex-grow: 1;
+    /* Allow the graph wrapper to take the remaining width */
+}
+
+/* The styling for the individual graphs is now within the DBStatsGraph component */
+
+/* You might not need these anymore if DBStatsGraph handles its own layout */
+/* .quick-access .grid .graph-box {
+  height: auto;
+  padding: 0.5rem;
+}
+
+.quick-access .grid .graph-box .graph-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.quick-access .grid .graph-box .graph-row .graph-box {
+  flex: 1 1 400px;
+  background: #111c2e;
+  border-radius: 10px;
+  padding: 1rem;
+  height: 300px;
+  width: 100%;
+} */

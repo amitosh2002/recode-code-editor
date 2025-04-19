@@ -8,7 +8,7 @@ const initialState = {
 
     userData: [],
     userDetails: {},
-    userList: [],   
+    userList: null,   
     fetchAllUser: [],
     singleUser: [],
     FETCH_USER_DATA:false,
@@ -36,4 +36,5 @@ export const userReducer = createReducer(initialState, (builder) => {
     .addCase(FETCH_sINGLE_USER, (state, action) => {
         state.singleUser = action.payload; // Update FETCH_USER_DATA state with new data
     })
+    
 })

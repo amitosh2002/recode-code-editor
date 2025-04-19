@@ -1,13 +1,13 @@
 import axios from "axios"
 import { getAllUser, loginUser, singleUser } from "../Api/userCredentialApi"
 import { onerrorToast, onSucessToast } from "../../component/Tostify"
-import { FETCH_ALL_USERS, FETCH_sINGLE_USER, SET_USER_DETAILS } from "../Constants/constants"
+import {  FETCH_sINGLE_USER, SET_USER_DETAILS, SET_USER_LIST } from "../Constants/constants"
 
 
 export const fetchAllUsers = () => async(dispatch)=>{
 
     try {
-        const response = axios.get(`${getAllUser}`,
+        const response = await axios.get(`${getAllUser}`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -17,8 +17,9 @@ export const fetchAllUsers = () => async(dispatch)=>{
             }
         )
         if (response.status === 200) {
-            dispatch({ type: FETCH_ALL_USERS, payload: response.data.allUsers })
-            onSucessToast("User Fetched Successfully")
+            dispatch({ type: SET_USER_LIST, payload: response.data.allUser })
+            // onSucessToast("User Fetched Successfully")
+            // console.log(response.data, "user list from action")
 
             
         }

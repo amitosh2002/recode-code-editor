@@ -46,9 +46,10 @@ const NavBar = () => {
             )}
           </li>
           <li>
-            {userDetails.role === "admin" && (
+            {/* {userDetails.role === "admin" && (
               <NavLink to="/exam">Test Page</NavLink>
-            )}
+            )} */}
+              <NavLink to="/exam">Test Page</NavLink>
           </li>
         </ul>
         <ul>
