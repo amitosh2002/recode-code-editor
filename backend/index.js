@@ -8,6 +8,8 @@ import route from "./Router/questionRoutes.js";
 import userRoute from "./Router/userRoutes.js";
 import TestResultRoute from "./Router/testResultRoutes.js";
 import TestRoute from "./Router/testRoute.js";
+import dbRouter from "./Router/dataBaseRoute.js";
+
 
 dotenv.config();
 
@@ -45,6 +47,7 @@ mongoose
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch((err) => console.log(err));
+app.use("/api/db/", dbRouter);
 
 app.use("/api", route);
 app.use("/api/auth", userRoute);
