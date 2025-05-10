@@ -6,6 +6,8 @@ export const getAllTest = async (req, res) => {
     if (!allTest) {
       return res.status(404).json({ message: "No test found" });
     }
+    
+    console.log(allTest, "all test data");
     return res.status(200).json({ allTest });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .email-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .logo {
+      display: block;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+    }
+
+    .heading {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .text {
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .info-block {
+      margin-bottom: 20px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .email-wrapper {
+        padding: 15px;
+      }
+
+      .heading {
+        font-size: 20px;
+      }
+
+      .text {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Lightning_icon.svg/1024px-Lightning_icon.svg.png" alt="Re/code Logo" class="logo" />
+
+    {{!-- <div class="heading">{name}, thank you for registering to {"<re/code>"}.</div> --}}
+    <div class="heading">{{name}}, thank you for registering to &lt;re/code&gt;.</div>
+
+
+    <div class="text">
+      Your order is being processed by UPS and is on its way to Amsterdam. You will receive an update from us regarding the status of your order and the delivery of the parcel.
+    </div>
+
+    <div class="info-block">
+      <span class="info-label">Ordernumber</span>
+      KLS12342212
+    </div>
+
+    <div class="info-block">
+      <span class="info-label">Trackingnumber</span>
+      3456789ASDFLKSADNF212
+    </div>
+
+    <div class="info-block">
+      <span class="info-label">Delivery address</span>
+      Waterview Lane Sante Fe 4019<br/>
+      NM, New Mexico 87500<br/>
+      United States
+    </div>
+
+    <div class="footer">
+      &copy; 2025 &lt;re/code&gt;. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>

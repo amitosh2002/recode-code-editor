@@ -21,6 +21,9 @@ const allowedOrigins = [
   "https://recode-code-editor.onrender.com"
 ];
 
+ console.log("Received Data:", process.env.SUPPORT_EMAIL); // ✅ Log request body
+    console.log("Received Data:", process.env.SUPPORT_EMAIL_PASSWORD); // ✅ Log request body
+
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -44,6 +47,10 @@ mongoose
   })
   .then(() => {
     console.log("Connected to MongoDB");
+    
+ console.log("Received Data:", process.env.SUPPORT_EMAIL); // ✅ Log request body
+    console.log("Received Data:", process.env.SUPPORT_EMAIL_PASSWORD); // ✅ Log request body
+
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch((err) => console.log(err));
