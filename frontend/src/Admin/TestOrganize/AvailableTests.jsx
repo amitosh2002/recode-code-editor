@@ -55,7 +55,7 @@ if (isLoading) {
 }
 
   return (
-    <div className="test-container">
+    <div className="test-container"style={{display:"flex", flexDirection:"row", width:"100%" ,maxWidth:"1450px"}}>
       {tests?.map((test, index) => {
         const isActive =
           getCurrentTime() >= test.startTime.toLocaleString() &&

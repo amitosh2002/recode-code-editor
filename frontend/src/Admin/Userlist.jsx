@@ -25,7 +25,6 @@ const Userlist = () => {
   // alert for delete confirmation
 
   const submitDelete = ({ id }) => {
-    // console.log(id);
     confirmAlert({
       title: "Confirm to Remove",
       message: "Are you sure to Remove this user?",
@@ -44,7 +43,7 @@ const Userlist = () => {
   };
 
   const handleDeleteUser = async (id) => {
-    console.log(id);
+    // console.log(id);
     const deltedUser = await deleteUser(id);
     console.log(deltedUser);
     setUser(user.filter((q) => q._id !== id));

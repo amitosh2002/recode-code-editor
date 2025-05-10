@@ -6,7 +6,7 @@ import { onerrorToast, onSucessToast } from "./Tostify";
 import { loginUser } from "../Services/UserServices";
 import { handleUserDetails } from "../Redux/Actions/actions";
 import { useDispatch } from "react-redux";
-const Login = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
    const [loginCredentials,setLoginCredentials] =useState({
@@ -59,7 +59,7 @@ const Login = () => {
 };
    const handleLogin=(e)=>{
     e.preventDefault();
-    console.log(loginCredentials);
+    // console.log(loginCredentials);
     loginAuthentication()
     // navigate('/home')
     
@@ -70,7 +70,7 @@ const Login = () => {
         <img src={loginImg} alt="" />
       </div>
       <div className="form-container">
-        <p className="title">Login</p>
+        <p className="title"> Administration Login</p>
         <form className="form">
           <div className="input-group">
             <label htmlFor="email">Email</label>
@@ -88,7 +88,7 @@ const Login = () => {
             <select style={{padding: "8px", borderRadius: "10px", maxWidth: "fit-content",maxHeight: "fit-content",border: "1px solid gray",backgroundColor: "white",cursor: "pointer", }}
  name="role" id="role" onChange={handleChange} value={loginCredentials.role}>
               <option value="select">Select Role</option>
-              <option value="student">Student</option>
+              <option value="admin">Admin</option>
               <option value="dev">Dev</option>
             </select>
           </div>
@@ -288,4 +288,4 @@ const LoginContainer = styled.div`
     color: #0e0f0f;
   }
 `;
-export default Login;
+export default AdminLogin;

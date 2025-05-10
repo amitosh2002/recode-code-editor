@@ -35,24 +35,33 @@ const NavBar = () => {
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
-          {!sucessLogin && (
-            <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
-          )}
+       
           <li>
             {userDetails.role === "admin" && (
               <NavLink to="/admin">Admin</NavLink>
             )}
           </li>
           <li>
-            {/* {userDetails.role === "admin" && (
+          {["admin", "dev", "student"].includes(userDetails.role) && (
               <NavLink to="/exam">Test Page</NavLink>
-            )} */}
-              <NavLink to="/exam">Test Page</NavLink>
+            )}
+            
+           
+
           </li>
+          {/* <li>
+          {userDetails.role === "admin" && (
+              <NavLink to="/admin">Admin</NavLink>
+            )}
+          </li> */}
+         
         </ul>
         <ul>
+        {!sucessLogin && (
+            <li>
+              <NavLink style={{padding:"8px",background:"#309898", borderRadius:"5px"}} to="/login">Login</NavLink>
+            </li>
+          )}
           <li>{sucessLogin && <DropDownNav userDetails={userDetails} />}</li>
         </ul>
       </nav>
@@ -66,6 +75,7 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 0 20px;
     background-color: #18191a;
+    width: 100%;
   }
   a {
     text-decoration: none;

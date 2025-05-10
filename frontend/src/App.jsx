@@ -29,12 +29,16 @@ import TestPage from "./component/TestComponentV1/TestPage";
 import ExamControl from "./component/TestComponentV1/ExamControl";
 // import EmployeeChart from "./Admin/AdminGraph";
 import DBStatsGraph from "./Admin/AdminGraph";
+import AdminLogin from "./component/AdminLogin";
+import ProtectedRoute from "./AuthControl/ProtectedRoute";
+import SessionTimeout from "./AuthControl/SessionTimeout";
 // import Dashboard from "./Admin/AdminDashBoard";
 
 // 🌟 Layout for Normal Pages
 const MainLayout = () => (
   <>
     <NavBar />
+    <SessionTimeout session={10}/>
     <Outlet /> {/* This renders the current page content */}
     <Toggle />
     <Footer />
@@ -57,10 +61,21 @@ const router = createBrowserRouter([
       { path: "/practice", element: <PracticeCode /> },
       { path: "/question/:id", element: <PracticeCodePanel /> },
       { path: "/login", element: <Login /> },
+      { path: "/login/admin", element: <AdminLogin /> },
       { path: "/signup", element: <SignUp /> },
       { path: "/my-account", element: <MyAccount /> },
-      { path: "/exam", element: <ExamControl /> },
-      { path: "/exam/:subjectCode", element: <TestPage /> },
+      // { path: "/exam",  element: <ExamControl /> },
+      
+      // { path: "/exam/:subjectCode", element: <TestPage /> },
+        // **Protected Student/Dev Routes**
+        {
+          path: "/exam",
+          element: <ProtectedRoute allowedRoles={["student", "dev", "admin"]} />,
+          children: [
+              { path: "", element: <ExamControl /> },
+              { path: ":subjectCode", element: <TestPage /> },
+          ],
+      },
     ],
   },
   {
@@ -87,6 +102,34 @@ const App = () => {
       dispatch(handleUserDetails(JSON.parse(storedUser))); // ✅ Update Redux state on page load
     }
   }, [dispatch]);
+     
+
+  const [isSmallScreen, setIsSmallScreen] = React.useState(window.innerWidth < 650);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 650);
+    };
+
+    // Set initial state
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isSmallScreen) {
+    return <div className="device-warning-card">
+    <div className="warning-content">
+        <h2>Switch to a Laptop or Tablet or enable Desktop version</h2>
+        <p>For a better experience, please use a laptop or tablet to access Recode.</p>
+    </div>
+</div>;
+  }
+
 
   return (
     <>

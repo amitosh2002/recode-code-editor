@@ -24,7 +24,7 @@ const TestOrganizeHome = () => {
   return (
     <>
       {tests.length > 0 ? (
-        <div className="active_tests">
+        <div className="active_tests" style={{width:"100%",maxWidth:"1450px"}}>
           <AvailableTests />
           <Button onClick={() => setPopup(true)}>Create A Test Now</Button>
 

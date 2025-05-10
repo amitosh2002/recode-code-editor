@@ -4,7 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const onSucessToast = (message)=>{
     toast.success(message, {
-        position: "top-right",
+        // position: "top-right",
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -12,7 +13,7 @@ export const onSucessToast = (message)=>{
         draggable: true,
         progress: undefined,
     });
-    console.log("toast");
+    // console.log("toast");
     
 }
 export const onerrorToast = (message)=>{

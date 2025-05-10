@@ -88,14 +88,16 @@ const Wrapper = styled.div`
     /* background-color: grey; */
     border-radius: 15px;
     width: 60%;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
+    background: #111c2e;
+
     /* From https://css.glass */
-    background: rgba(237, 237, 5, 0.532);
+    /* background: rgba(237, 237, 5, 0.532);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(18.7px);
     -webkit-backdrop-filter: blur(18.7px);
-    border: 1px solid rgba(175, 237, 61, 0.562);
+    border: 1px solid rgba(175, 237, 61, 0.562); */
 
     background-attachment: fixed;
     background-size: cover;

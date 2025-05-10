@@ -4,7 +4,8 @@ import { onSucessToast } from "./Tostify";
 const ContactMe = () => {
   return (
     <ContactForm>
-      <div className="img">
+     <div className="responsive_container">
+     <div className="img">
         <img src={contactImg} alt="" />
       </div>
       <form
@@ -54,19 +55,44 @@ const ContactMe = () => {
           Submit
         </button>
       </form>
+     </div>
     </ContactForm>
   );
 };
 const ContactForm = styled.div`
+.responsive_container{
+
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
   margin-left: 250px;
+}
+  
   img {
     width: 400px;
     height: 300px;
     object-fit: cover;
   }
+  @media screen and (width< 768px) {
+    .responsive_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        align-items: center;
+        min-width: 352px;
+        width: 100%;
+
+      }
+  img {
+    width: 320px;
+    height: 300px;
+    object-fit: cover;
+  }
+        
+  }
+
   .colorful-form {
     width: 400px;
     margin: 20px auto;

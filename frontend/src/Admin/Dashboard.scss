@@ -52,6 +52,8 @@
     background: #111c2e;
     padding: 1.5rem;
     border-radius: 12px;
+    width: 100%;
+    max-width: 1450px;
 
     .text-box {
         background-color: #0f5cd7 !important;
@@ -72,8 +74,8 @@
 }
 
 .quick-access .grid {
-    display: flex;
-    flex-direction: row;
+    // display: flex;
+    // flex-direction: row;
     /* Arrange text boxes and graph wrapper in a row */
     gap: 1rem;
     width: 100%;
@@ -81,6 +83,11 @@
     align-items: flex-start;
     // background-color: aqua;
     /* Align items to the top */
+}
+
+.graph-box {
+    width: 100%;
+    max-width: 1450px;
 }
 
 .quick-access .grid .box-container {
@@ -101,10 +108,13 @@
     width: fit-content;
     min-width: auto;
     flex-grow: 0;
+    width: 1250px;
+    max-width: 100%;
 }
 
 .quick-access .grid .graph-box-wrapper {
     flex-grow: 1;
+
     /* Allow the graph wrapper to take the remaining width */
 }
 

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {  Outlet, NavLink } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import "./Dashboard.scss";
 // import DBStatsGraph from "../DBStatsGraph";
 import { GrDocumentStore, GrServerCluster } from "react-icons/gr";
@@ -44,7 +44,7 @@ const Dashboard = () => {
     };
 
     fetchStats();
-  }, []);
+  }, [dispatch]);
    const userList = useSelector((state) => state.userReducer?.userList);
    const allTests = useSelector((state) => state.testReducer?.allTests);
     const userDetails =

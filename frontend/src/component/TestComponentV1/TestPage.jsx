@@ -25,6 +25,8 @@ import {
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { CgArrowDown,  CgCornerDoubleDownRight } from "react-icons/cg";
 import { CLOSE_TEST_CASES_AREA } from "../../Redux/Constants/testConstant";
+import Invigilator from "./Invigilator";
+import { use } from "react";
 
 const TestPage = () => {
   const location = useLocation();
@@ -40,11 +42,13 @@ const TestPage = () => {
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
   };
+  const [monitering,setMonitering]=useState(false);
 //
 
   useEffect(() => {
     if (testCredential?.testId) {
       dispatch(fetchSingleTest(testCredential.testId));
+      setMonitering(true)
     }
   }, [dispatch, testCredential]);
 
@@ -70,12 +74,12 @@ const TestPage = () => {
     const passingScore = currentTest?.passingScore;
 
     
-    const code = editorRef.current.getValue();  // Get the code from the editor
+    const code = editorRef.current.getValue() ||" ";  // Get the code from the editor
     dispatch(testCompilerRun(code));
      const checkTestActionData = {
       testCases: testCasesData,
       passingScore: passingScore,
-    outputCode:compilerResult
+      outputCode:compilerResult
   }
     dispatch(handleTestResultCheker(checkTestActionData))
     // compilerResult
@@ -114,6 +118,9 @@ score:testReport?.status||""  // isCorrect: question.testCases.every((testCase) 
 
   return (
     <div className="coding_exam">
+      {
+        monitering && <Invigilator/>
+      }
       {/* Test Info */}
       <Card className="test-info">
         <CardContent
@@ -123,6 +130,9 @@ score:testReport?.status||""  // isCorrect: question.testCases.every((testCase) 
             alignItems: "center",
             gap: "20px",
             border: "1px solid black",
+    background:" #111c2e",
+    color:"white"
+
           }}
         >
           <Typography variant="h5">{currentTest?.subjectName}</Typography>
@@ -149,7 +159,7 @@ score:testReport?.status||""  // isCorrect: question.testCases.every((testCase) 
         <div className="left-panel">
           <div className="tab_control">
             <Box
-              sx={{ borderBottom: 1, width: "100%", borderColor: "divider" }}
+              sx={{ borderBottom: 1, width: "100%",maxWidth:"1450px", borderColor: "divider" }}
             >
               <Tabs
                 value={activeTab}

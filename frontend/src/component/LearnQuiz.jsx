@@ -223,27 +223,27 @@ const LearnQuiz = () => {
 
   return (
     <Container>
-      <section class="layout">
-        <div class="sidebar">
+      <section className="layout">
+        <div className="sidebar">
           <AnalysisSection>
             <h3>Quiz Performance Analysis</h3>
             <div className="chart-container">
               <Doughnut data={chartData} /> {/* Using Doughnut chart */}
             </div>
             <MarksAnalysis>
-              <section class="layout">
-                <div class="grow1">
+              <section className="layout">
+                <div className="grow1">
                   <strong>Correct Answer : {correctAnswersCount}</strong>
                 </div>
-                <div class="grow1">
+                <div className="grow1">
                   {" "}
                   <strong>Incorrect Answer : {incorrectAnswersCount}</strong>
                 </div>
-                <div class="grow1">
+                <div className="grow1">
                   {" "}
                   <strong>Total Question :{quizQuestions.length}</strong>
                 </div>
-                <div class="grow1">
+                <div className="grow1">
                   {" "}
                   <strong>
                     Percentage :{" "}
@@ -256,7 +256,7 @@ const LearnQuiz = () => {
           </AnalysisSection>
           <AnalysisSectionTag></AnalysisSectionTag>
         </div>
-        <div class="body">
+        <div className="body">
           <div>
             {quizQuestions.map(
               ({

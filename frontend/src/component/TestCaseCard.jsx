@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { VscPassFilled } from "react-icons/vsc";
 import { ImCross } from "react-icons/im";
@@ -7,20 +6,48 @@ const TestCaseCard = ({ outputCode, testCases }) => {
   console.log(typeof(outputCode), "outputCode from test case card");
 
 let obj = {};
+// try {
+//   obj = JSON.parse(outputCode);
+//   // console.log("Parsed JSON object:", obj);
+// } catch (err) {
+//   console.error("Invalid JSON format for outputCode:", outputCode,err);
+//   // Fallback: Convert the string into an object with line numbers as keys
+//   obj = outputCode
+//     .split("\n")
+//     .filter((line) => line.trim() !== "") // Remove empty lines
+//     .reduce((acc, line, index) => {
+//       acc[`Line ${index + 1}`] = line;
+//       return acc;
+//     }, {});
+// }let obj = {};
 try {
-  obj = JSON.parse(outputCode);
-  // console.log("Parsed JSON object:", obj);
+  // Attempt to parse as JSON (expecting a structured object or array)
+  if (outputCode.trim().startsWith("{") || outputCode.trim().startsWith("[")) {
+    obj = JSON.parse(outputCode);
+  } else {
+    // Fallback to line-based parsing
+    obj = outputCode
+      .split("\n")
+      .filter((line) => line.trim() !== "")
+      .reduce((acc, line, index) => {
+        acc[`Line ${index + 1}`] = line.trim();
+        return acc;
+      }, {});
+  }
 } catch (err) {
-  console.error("Invalid JSON format for outputCode:", outputCode,err);
-  // Fallback: Convert the string into an object with line numbers as keys
+  console.error("Invalid outputCode format:", outputCode, err);
+  // Fallback for unexpected cases
   obj = outputCode
     .split("\n")
-    .filter((line) => line.trim() !== "") // Remove empty lines
+    .filter((line) => line.trim() !== "")
     .reduce((acc, line, index) => {
-      acc[`Line ${index + 1}`] = line;
+      acc[`Line ${index + 1}`] = line.trim();
       return acc;
     }, {});
 }
+
+console.log("Parsed outputCode object:", obj);
+
 
   return (
     <TestCaseWrapper>
@@ -29,8 +56,11 @@ try {
       {
         testCases?.map((testCase, index) => {
           // Normalize both expected and actual output
-          const expectedOutput = String(testCase.output).trim();
-          const actualOutput = obj[`Line ${index + 1}`] || ""; // Get the corresponding line from obj
+          const expectedOutput = String(testCase.output)?.trim();
+          // const actualOutput = obj[`Line ${index + 1}`] || ""; // Get the corresponding line from obj
+          const actualOutput = (obj && obj[`Line ${index + 1}`]) || ""; // Safely access obj
+          console.log(actualOutput,"actual output 4545")
+
 
           console.log(
             "Expected Output:",
