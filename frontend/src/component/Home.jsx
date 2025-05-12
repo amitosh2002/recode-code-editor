@@ -84,7 +84,6 @@ Ready to code? Join <re/code> and get started today!
 
 */
 
-import React from "react";
 import styled from "styled-components";
 import homePageBg from "../assets/Welcome to recode.png";
 import { NavLink } from "react-router-dom";
@@ -145,7 +144,7 @@ const HomeWrapper = styled.div`
     background-image: url(${homePageBg});
     background-repeat: no-repeat;
     object-fit: cover;
-    background-size: 1550px;
+    background-size: 100%;
     color: #01010a;
     padding: 60px 0;
     text-align: center;

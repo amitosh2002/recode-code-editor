@@ -29,9 +29,9 @@ import TestPage from "./component/TestComponentV1/TestPage";
 import ExamControl from "./component/TestComponentV1/ExamControl";
 // import EmployeeChart from "./Admin/AdminGraph";
 import DBStatsGraph from "./Admin/AdminGraph";
-import AdminLogin from "./component/AdminLogin";
-import ProtectedRoute from "./AuthControl/ProtectedRoute";
+// import ProtectedRoute from "./AuthControl/ProtectedRoute";
 import SessionTimeout from "./AuthControl/SessionTimeout";
+import AdminReg from "./component/AdminReg";
 // import Dashboard from "./Admin/AdminDashBoard";
 
 // 🌟 Layout for Normal Pages
@@ -61,21 +61,21 @@ const router = createBrowserRouter([
       { path: "/practice", element: <PracticeCode /> },
       { path: "/question/:id", element: <PracticeCodePanel /> },
       { path: "/login", element: <Login /> },
-      { path: "/login/admin", element: <AdminLogin /> },
+      { path: "/signup/admin", element: <AdminReg /> },
       { path: "/signup", element: <SignUp /> },
       { path: "/my-account", element: <MyAccount /> },
-      // { path: "/exam",  element: <ExamControl /> },
+      { path: "/exam",  element: <ExamControl /> },
       
-      // { path: "/exam/:subjectCode", element: <TestPage /> },
+      { path: "/exam/:subjectCode", element: <TestPage /> },
         // **Protected Student/Dev Routes**
-        {
-          path: "/exam",
-          element: <ProtectedRoute allowedRoles={["student", "dev", "admin"]} />,
-          children: [
-              { path: "", element: <ExamControl /> },
-              { path: ":subjectCode", element: <TestPage /> },
-          ],
-      },
+      //   {
+      //     path: "/exam",
+      //     element: <ProtectedRoute allowedRoles={["student", "dev", "admin"]} />,
+      //     children: [
+      //         { path: "", element: <ExamControl /> },
+      //         { path: ":subjectCode", element: <TestPage /> },
+      //     ],
+      // },
     ],
   },
   {

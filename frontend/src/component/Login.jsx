@@ -89,6 +89,7 @@ const Login = () => {
  name="role" id="role" onChange={handleChange} value={loginCredentials.role}>
               <option value="select">Select Role</option>
               <option value="student">Student</option>
+              <option value="admin">admin</option>
               <option value="dev">Dev</option>
             </select>
           </div>

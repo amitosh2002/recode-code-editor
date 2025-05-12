@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { onSucessToast } from "./Tostify";
 import { signUpUser } from "../Services/UserServices";
 import { onerrorToast } from "./Tostify";
-const SignUp = () => {
+const AdminReg = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     firstName: "",
@@ -54,8 +54,8 @@ try {
     e.preventDefault();
     handleSignUpCredentails();
     // navigate("/login");
-    const { firstName, lastName, email, password, confirmPassword,role } = user;
-    console.log(firstName, lastName,role, email, password, confirmPassword);
+    // const { firstName, lastName, email, password, confirmPassword,role } = user;
+    // console.log(firstName, lastName,role, email, password, confirmPassword);
   };
   return (
     <SignUpContainer>
@@ -63,7 +63,7 @@ try {
         <img src={registerImg} alt="" />
       </div>
       <form className="form" onSubmit={handleSubmit}>
-        <p className="title">Register </p>
+        <p className="title">Administration Register  </p>
         <p className="message">
           <strong>Signup now and get full access to our app.</strong>{" "}
         </p>
@@ -112,7 +112,7 @@ try {
             <select style={{padding: "8px", borderRadius: "10px", maxWidth: "fit-content",maxHeight: "fit-content",border: "1px solid gray",backgroundColor: "white",cursor: "pointer", }}
  name="role" id="role" onChange={onHandleChange} value={user.role}>
               <option value="select">Select login type</option>
-              <option value="student">Student</option>
+              <option value="admin">Admin</option>
               <option value="dev">Dev</option>
             </select>
           </div>
@@ -311,4 +311,4 @@ const SignUpContainer = styled.div`
     }
   }
 `;
-export default SignUp;
+export default AdminReg;

@@ -30,6 +30,7 @@ const TestCaseOutput = ({ testCases, language, editorRef ,currQuestion}) => {
     questionId: currQuestion._id || "",
     programming_language:language,
     questionDetails: currQuestion.description || "",
+    // writtenCode: editorRef.current.getValue() || "",
     questionAnswer: testCases || "",
     answerStatus: "",
     feedback: "",
