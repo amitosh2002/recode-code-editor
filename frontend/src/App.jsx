@@ -32,7 +32,18 @@ import DBStatsGraph from "./Admin/AdminGraph";
 // import ProtectedRoute from "./AuthControl/ProtectedRoute";
 import SessionTimeout from "./AuthControl/SessionTimeout";
 import AdminReg from "./component/AdminReg";
+import { useLocation } from 'react-router-dom';
 // import Dashboard from "./Admin/AdminDashBoard";
+  const location = useLocation();
+  useEffect(() => {
+    // This sends a pageview event to Google Analytics on every route change.
+    if (window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: location.pathname,
+        page_title: document.title,
+      });
+    }
+  }, [location]);
 
 // 🌟 Layout for Normal Pages
 const MainLayout = () => (
