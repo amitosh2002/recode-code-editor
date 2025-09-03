@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import NavBar from "./component/NavBar";
 import EditorBody from "./component/Editor";
@@ -34,7 +34,11 @@ import SessionTimeout from "./AuthControl/SessionTimeout";
 import AdminReg from "./component/AdminReg";
 import { useLocation } from 'react-router-dom';
 // import Dashboard from "./Admin/AdminDashBoard";
+
+// 🌟 Component to handle Google Analytics inside Router context
+const GoogleAnalyticsTracker = () => {
   const location = useLocation();
+  
   useEffect(() => {
     // This sends a pageview event to Google Analytics on every route change.
     if (window.gtag) {
@@ -45,9 +49,13 @@ import { useLocation } from 'react-router-dom';
     }
   }, [location]);
 
+  return null; // This component doesn't render anything
+};
+
 // 🌟 Layout for Normal Pages
 const MainLayout = () => (
   <>
+    <GoogleAnalyticsTracker /> {/* Add GA tracker here */}
     <NavBar />
     <SessionTimeout session={10}/>
     <Outlet /> {/* This renders the current page content */}
@@ -92,7 +100,12 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     // element: <ProtectedRoute allowedRoles={["admin"]} />, // Admin pages get their own layout
-    element: <AdminPage />, // Admin pages get their own layout
+    element: (
+      <>
+        <GoogleAnalyticsTracker /> {/* Add GA tracker for admin routes too */}
+        <AdminPage />
+      </>
+    ), // Admin pages get their own layout
     children: [
       { path: "", element: <AdminPage /> }, // Admin Dashboard
       { path: "questionList", element: <QuestionList /> },
@@ -106,14 +119,13 @@ const router = createBrowserRouter([
 
 const App = () => {
   const dispatch = useDispatch();
-  // ��� Fetch user details from local storage and update Redux state on page load
+  // 🔥 Fetch user details from local storage and update Redux state on page load
   React.useEffect(() => {
     const storedUser = localStorage.getItem("userDetails");
     if (storedUser) {
       dispatch(handleUserDetails(JSON.parse(storedUser))); // ✅ Update Redux state on page load
     }
   }, [dispatch]);
-     
 
   const [isSmallScreen, setIsSmallScreen] = React.useState(window.innerWidth < 650);
 
@@ -140,7 +152,6 @@ const App = () => {
     </div>
 </div>;
   }
-
 
   return (
     <>
